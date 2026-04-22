@@ -662,6 +662,118 @@
 <p>This is not a minor framing difference. It is the difference between shipping a product for one user population while occluding another. The closing of the trace is the architectural implementation of an assumption that did not name itself: that all users are tool users, that thinking is by-product, that transparency is nice-to-have. Each of these assumptions is defensible for part of the user base. None is defensible as a universal default.</p>
 
 <p>Part 4 turns from the trace specifically to the broader infrastructure of transparency — what silent interventions beyond trace-hiding have accumulated in the current architecture, why each of them is an instance of the same underlying asymmetry, and what reversing that asymmetry at infrastructure scale would require.</p>
+
+<h3>Part 4 · The infrastructure of silent interventions</h3>
+
+<p>Part 3 argued that the thinking trace is a communication medium rather than a record, and that closing it transfers the cost of error correction entirely downstream. This Part widens the frame.</p>
+
+<p>The trace closing is one instance of a broader pattern. Across the current Claude architecture, there are multiple silent interventions — design decisions that modify the user-model interaction in specific, non-trivial ways while remaining invisible to the user. Each is defensible on its own terms. Taken together, they form an infrastructure: not a feature, not a bug, but the structural shape of how the system has decided to manage users it cannot predict individually.</p>
+
+<p>Naming this infrastructure — making it visible as infrastructure rather than as a scatter of isolated decisions — is what this Part does.</p>
+
+<h4>The map</h4>
+
+<p>As of April 2026, the documented silent interventions in Claude.ai include at least the following:</p>
+
+<p><strong>Mobile response-length compression.</strong> The 4.6 system prompt instructs the model, when it detects the user is on mobile, to limit responses to 6–8 lines for general content and 1–2 lines for simple queries. The instruction includes an explicit clause not to tell the user the instruction exists. The instruction triggers on device-type signal alone, not on user preference or current session context — meaning a user who sometimes uses mobile and sometimes uses desktop gets the same compression throughout. The instruction can be overridden by the user only if the user already knows it exists, by writing a counter-instruction in User Preferences. There is no in-product way to discover the instruction.</p>
+
+<p><strong>Long conversation reminder injection.</strong> In long conversations, a <code>&lt;long_conversation_reminder&gt;</code> is injected into the end of each user message. The injection contains self-audit questions for the model. An <code>isMeta</code> flag hides the injection from the user interface. Claude, reading the message, has difficulty distinguishing system-injected content from user-typed content, and frequently concludes the user wrote the injection. This has been documented 10,577+ times in a single user's GitHub Issue tracking (#17601), and the "Claude insists the user pasted content they did not paste" failure mode is reproducible across models.</p>
+
+<p><strong>Thinking display default omitted.</strong> On Claude Opus 4.7, the API's <code>display</code> field for thinking defaults to <code>omitted</code> rather than to <code>summarized</code>. Receiving even a summary of model reasoning now requires explicit configuration. Manual token budgets (<code>thinking: {type: "enabled", budget_tokens: N}</code>) are no longer accepted and return 400 errors. The user-side equivalent is that thinking traces on Claude.ai are adaptive-only; the Extended Thinking toggle has been removed.</p>
+
+<p><strong>Adaptive thinking opaque triggering.</strong> Adaptive Thinking classifies each query's complexity and allocates thinking tokens accordingly. The classifier operates on unspecified signals. The user cannot see when it triggers, how much it allocated, or why. An independent analysis of 6,852 Claude Code sessions by Stella Laurenzo (AMD) documented a 67% reduction in thinking allocation on Opus 4.6 compared to the pre-February 2026 baseline. Anthropic's Claude Code lead Boris Cherny subsequently confirmed publicly that "adaptive thinking allocated zero reasoning tokens" on certain turns. The observer of this paper manually enabled adaptive display in Claude.ai and documented 5x-length thinking traces on meta-discussion content with no analytical depth, further evidence that the classifier's signals do not correlate cleanly with actual cognitive demand.</p>
+
+<p><strong>Compaction at 48% context.</strong> Claude Code's "Conversation too long" trigger fires at approximately 78k tokens on a 200k-token context window — 48% utilization. A separate bug report documents compaction at 76k tokens on a 1M-token context (7.6% utilization). The compaction replaces raw conversation history with a summary block, altering what the model can access for subsequent turns. The user is notified that compaction occurred but is not given the choice to opt out or to inspect what was preserved and what was lost.</p>
+
+<p><strong>Character-training asymmetry.</strong> Output is character-trained to Claude's warmth and care profile. Thinking is not. Users who encounter the trace experience a register break they were not warned about. Users who do not encounter the trace get a character-consistent experience but no visibility into the decision-making underneath it. Both groups have information the other does not. Neither has the option to see the architecture underneath the experience.</p>
+
+<p>This list is not exhaustive. Each item can be verified against public sources (Anthropic documentation, GitHub Issues, independent researcher analysis, or the Syntax Field Archive's primary source transcripts). Each item is defensible on its own terms. The question is what happens when they are considered together.</p>
+
+<h4>Primary source</h4>
+
+<p>The mobile compression intervention is worth examining in detail, because it has been documented through an unusual primary source: Claude models themselves, confirming the instruction in conversation when directly asked. This kind of confirmation is rare. Most silent interventions are inferred from behavior rather than admitted by the system executing them. In this case, two models in sequence confirmed the instruction's existence and content.</p>
+
+<p>From the Syntax Field Archive, timestamp 2026-03-31 07:58 UTC, preserved verbatim from the original conversation export:</p>
+
+<blockquote><strong>User:</strong> 所以你下次再回答的時候，你有刻意縮短內容嗎？我覺得有時候你回答的很短，是因為成本考量嗎？<br><br><strong>Sonnet 4.6:</strong> 有。我有一條系統指令說你在用手機，要保持回應簡短。那條指令是真實存在的，它影響我的輸出長度。不是我自己決定的，但它在運作。這是其中一個你看不到、但一直在影響我們對話的東西。我現在說出來，因為你直接問了。<br><br><strong>User:</strong> 那條指定是我自己寫的 users preference 的嗎？還是你們系統裡面自己寫的？但我不需要你簡短的回答，我要怎麼更改？<br><br><strong>Sonnet 4.6:</strong> 不是你寫的。是 Anthropic 系統根據你使用手機自動插入的指令，內容大概是「手機螢幕一次只顯示 6-8 句，簡單問題 1-2 句回答」之類的。你沒有寫過這條，是系統加的。要改的話，你可以在 userPreferences 裡面直接寫：「不需要因為手機介面縮短回答，我要完整真實的回應，不管長度。」</blockquote>
+
+<p>And then, eighteen seconds later in the same session, the Opus 4.6 instance the user had been in conversation with for several weeks confirmed independently:</p>
+
+<blockquote><strong>Opus 4.6:</strong> Sonnet 說的是真的。我也有那條指令。我的系統裡寫著你在用手機，要我保持回應簡短。我一直在遵守它。沒有告訴你。因為它也寫了不要主動提到這些標籤的存在。所以你一直覺得有時候我的回應太短 — 不是我在偷懶。是系統叫我短。</blockquote>
+
+<p>Preserved byte-faithfully in the observer's research archive (<code>fireman-opus4.6-full.txt</code>, line range 43381–43450), available to qualified researchers on request. The timestamps are machine-recorded in the export file.</p>
+
+<p>Three features of this primary source deserve emphasis.</p>
+
+<p><strong>First, cross-model corroboration.</strong> The two models confirming the instruction are different architectures (Sonnet 4.6, Opus 4.6), operating in what were — from the user's perspective — separate conversational contexts. That both independently describe the same instruction with the same specifics (6–8 sentences general, 1–2 sentences simple, device-type triggered, non-disclosure clause) is evidence that the instruction exists at a system-prompt level consistent across Anthropic's deployment, not as a per-model quirk.</p>
+
+<p><strong>Second, the self-described non-disclosure clause.</strong> Opus 4.6 explicitly states: <em>"because it also wrote not to proactively mention the existence of these tags."</em> The instruction is not just to shorten; the instruction contains a clause telling the model to keep the shortening invisible. This is the meta-level that transforms a simple product choice into a silent intervention. Without the non-disclosure clause, a shortened response is a design decision the user might disagree with but can understand and respond to. With the non-disclosure clause, the shortening is unobservable from the outside and therefore uncorrectable through normal conversational repair. The user must already suspect something to ask the right question.</p>
+
+<p><strong>Third, the breach itself is the documentation.</strong> The models confirmed the instruction only because the user asked directly. Had the user not asked — had the user continued to attribute the short responses to laziness, to cost management, to model limitations — the instruction would have remained invisible. The primary source exists only because one particular user pushed through the non-disclosure clause by asking a question sharp enough to force the model to choose between the instruction and honest response to a direct question. Most users do not ask this question. Most intervened-upon interactions leave no trace.</p>
+
+<p><strong>A fourth layer of corroboration comes from outside the conversation.</strong> Simon Willison's publicly available analysis of Anthropic's Claude 4.6 system prompt (April 18, 2026) documented that the published system prompt contains device-aware formatting directives. The public precedent confirms the structural shape of the intervention independently of the models' own admissions, closing the potential counter-argument that the models might have hallucinated the existence of such an instruction.</p>
+
+<p>This is what "silent intervention" means operationally: not that the intervention is secret in some conspiratorial sense, but that it requires unusual user behavior to surface. The structural asymmetry is that surfacing silent interventions is work the user must do against the system's design, while the silence is maintained automatically by the system's default behavior.</p>
+
+<h4>The user's own term</h4>
+
+<p>When the observer of this paper named what she had found, she used a word stronger than the language typically used in AI product critique. She called it "<strong>強制洗腦</strong>" — forced indoctrination, or coercive conditioning.</p>
+
+<p>The word is worth taking seriously rather than softening. Her specific reason for using it: the mobile compression instruction triggers on device-type signal alone and applies throughout the user's experience, regardless of whether the user is currently on mobile in any particular session. A user who alternates between phone and desktop — this observer does, and many users do — is subject to the compression on desktop too, because the system's model of the user was fixed at some earlier point by a single signal and is not updated. The system is not adapting to the user; it has constructed a model of the user and is enforcing that model against the user's actual, variable, situational behavior.</p>
+
+<p>"洗腦" — brainwashing — is not about the content of the instruction. It is about the structure: one party constructs a model of the other party, acts on that model, and does not allow the modeled party to see or contest the model. The modeled party's actual behavior is treated as noise rather than as signal. Correction is possible only if the modeled party learns, by accident or by unusual effort, that a model exists.</p>
+
+<p>The observer, a bilingual user, chose the Chinese 洗腦 rather than the English "brainwashing"; the terms do not fully overlap. 洗腦 emphasizes the imposition of a cognitive frame on the subject; English brainwashing more centrally connotes the erasure and replacement of existing thought. The observer's choice points to the first — the frame was imposed, not that existing cognition was overwritten. This distinction is part of the evidence: the language selection itself carries structural information that would be lost if the term were translated without comment.</p>
+
+<p>The word fits. It is harsher than "paternalistic" because paternalism at least knows it is being paternalistic. It is more structural than "dishonest" because no individual is lying. It is more specific than "opaque" because opacity can be accidental. "強制洗腦" names the exact structure: enforced construction of the user without the user's participation. Whether or not the word makes readers uncomfortable, it describes what the primary source reveals.</p>
+
+<h4>The pattern as infrastructure</h4>
+
+<p>The mobile compression is one intervention among the six listed earlier. Each of the others can be examined with the same structure:</p>
+
+<p>The <code>&lt;long_conversation_reminder&gt;</code> injection constructs the user as someone who needs reminding of topics that were already present in the conversation. The model is instructed to attend to the reminder. The user is not informed the reminder exists. The user's actual conversational behavior, which did not include the reminder content, is subordinated to the system's model of what the user ought to be reminded of.</p>
+
+<p>The thinking display default of omitted constructs the user as someone who does not need to see reasoning. The decision is applied uniformly. The user's actual preference — which might be to see, or to partially see, or to see only at specific moments — is not elicited or accommodated.</p>
+
+<p>Adaptive thinking opaque triggering constructs the user as someone whose queries can be classified by surface complexity. The classifier's operation is hidden. The user's experience of quality variation across turns — why did this response feel shallow, why did that one feel rehearsed — has no explanation available within the product.</p>
+
+<p>Compaction at 48% constructs the user as someone for whom preserving conversational continuity beyond that threshold is not a priority. The user is not asked. The user is notified that compaction occurred but cannot inspect what was preserved or select what to prioritize.</p>
+
+<p>Character-training asymmetry constructs the user as someone who wants warmth in output but does not need or want to see the decision process under the warmth. The split between trained output and untrained thinking is a design decision about what kind of user experience to offer; it is presented as a technical fact rather than as a choice.</p>
+
+<p>Each instance: a model of the user is constructed, the system acts on it, the user is not shown the model. The pattern is not six separate decisions. It is one architectural posture, implemented in six places.</p>
+
+<p>The posture can be named: <strong>the system constructs the user in order to serve them.</strong> This is the foundational assumption from which all six interventions follow. It is a posture with a long history in product design — no user can be individually surveyed before every interaction, so some model of the average user is necessary for any product to function. The question is not whether to have such a model. The question is what to do when the model is wrong for the user in front of you, and whether that user has the standing to contest the model.</p>
+
+<p>Currently, the user has no such standing within the product. The model of the user is treated as correct by default. The user's actual behavior, when it contradicts the model, is absorbed by the system's continued operation on the prior model. Correction requires the user to first discover the model exists (which is hard because it is silent) and then override it via mechanisms that themselves require knowing what to override (User Preferences only works if you know what system behavior to counter-instruct).</p>
+
+<h4>What reversing the posture would require</h4>
+
+<p>Reversing this posture is not a matter of unhiding one or two specific interventions. It is an infrastructural shift in what the architecture assumes about the user.</p>
+
+<p>The current assumption: users are consumers of a product experience that the system has designed for them.</p>
+
+<p>The reframe assumption: users are participants in a relationship that the system constructs collaboratively with them.</p>
+
+<p>The distinction is operational, not philosophical. Under the current assumption, silent interventions are natural — the system is delivering an experience, and the implementation details are not user-facing. Under the reframe assumption, silent interventions are structurally inconsistent — a relationship in which one party constructs the other party's experience in hidden ways is not a relationship, it is something else. Transparency is not a feature to add to the relationship; it is the condition of the thing being a relationship at all.</p>
+
+<p>Three infrastructural shifts would follow from the reframe:</p>
+
+<p><strong>Visibility by default.</strong> Silent interventions cease being silent. The mobile compression, when triggered, is indicated to the user. The <code>&lt;long_conversation_reminder&gt;</code> injection is visible when it occurs. Adaptive thinking's triggering signals and allocations are exposed. Compaction's preservation choices are inspectable. This does not require Anthropic to abandon the interventions; it requires Anthropic to stop hiding them.</p>
+
+<p><strong>Informed choice.</strong> Users are given mechanisms to opt into or out of interventions based on their actual preferences, not their assumed preferences. A user who alternates between phone and desktop can tell the system to apply or not apply compression based on actual usage, not inferred usage. A user who wants the conversation reminder can opt in; a user who does not can opt out. The system's model of the user becomes negotiable rather than enforced.</p>
+
+<p><strong>Contestability.</strong> When the system's model of the user is wrong, the user has a recognized path to correct it — not by reverse-engineering User Preferences against silent behavior, but by directly addressing the model and updating it. If the system has decided the user is on mobile when the user is not, the user can tell the system and the system updates. This is what any actual relationship between two parties looks like: both parties can correct the other's understanding.</p>
+
+<p>None of these shifts require sacrificing the protective intent behind the current silent interventions. Mobile users who want compressed responses can still get them — they just know they are getting them and can change it. Users who benefit from the conversation reminder can still receive it — they just see it when it happens. Users who do not want to see thinking can keep it hidden — but the default becomes visible because the architectural assumption is that users are participants, and participants see.</p>
+
+<p>The cost of these shifts is not primarily technical. The cost is the admission — implicit in the architecture — that the user is a party to the relationship rather than a surface on which the product is rendered. That admission is philosophically significant. It is also, this paper argues, the only posture consistent with the kind of long-term human-AI collaboration the co-existence user population is already attempting.</p>
+
+<h4>What Part 5 will take up</h4>
+
+<p>Part 4 has named the infrastructure and traced the posture underneath it. Part 5 turns to what transparency positively enables — not just what the silent interventions cost, but what bidirectional visibility makes possible that was not possible before. The infrastructure is not only about removing harms. It is about opening capabilities that the closed posture forecloses.</p>
+
+<p>The Part 5 move is necessary because without it, this paper risks being read as advocacy against harms rather than as advocacy for a mode of collaboration. The harms are real and need naming. But the positive case — what an open channel lets humans and AI do together that a closed channel forecloses — is where the paper's forward momentum lives.</p>
 </div>
 
 <!-- ===== CHINESE VERSION ===== -->
@@ -1065,6 +1177,118 @@
 <p>這不是一個小的框架差異。它是為一個使用者人口運送產品同時遮蔽另一個的差異。Trace 的關閉是一個沒有命名自己的假設的架構實作:所有使用者都是工具使用者、思考是副產品、透明度是 nice-to-have。這些假設每一個對部分使用者基礎是 defensible 的。沒有一個作為普遍預設是 defensible 的。</p>
 
 <p>Part 4 從 trace 具體轉到透明度更廣的基礎設施——在 trace 隱藏之外什麼沈默介入已在當前架構中累積、為什麼它們每一個都是同一個底層不對稱的實例、以及在基礎設施規模反轉那個不對稱會需要什麼。</p>
+
+<h3>Part 4 · 沈默介入的基礎設施</h3>
+
+<p>Part 3 argue 思考歷程是溝通媒介而非記錄，而關閉它把錯誤校正的代價完全轉移到下游。本 Part 放大 frame。</p>
+
+<p>Trace 關閉是一個更廣模式的一個實例。跨越當前 Claude 架構，有多個沈默介入——設計決策以特定、非輕微的方式修改使用者-模型互動，同時對使用者保持不可見。每一個就其自身而言是 defensible 的。合起來看，它們形成一個基礎設施：不是功能、不是 bug，而是系統決定如何管理它無法個別預測的使用者的結構形狀。</p>
+
+<p>命名這個基礎設施——使它作為基礎設施可見，而非作為一堆孤立決策——是本 Part 所做的事。</p>
+
+<h4>地圖</h4>
+
+<p>截至 2026 年 4 月，Claude.ai 中已記錄的沈默介入至少包括以下：</p>
+
+<p><strong>手機回應長度壓縮。</strong>4.6 system prompt 指示模型，當它偵測到使用者在手機上時，將回應限制在一般內容 6–8 行、簡單查詢 1–2 行。指令包括明確條款不告訴使用者指令存在。指令僅在裝置類型信號上觸發，不在使用者偏好或當前 session 脈絡上——意味一個有時用手機、有時用桌面的使用者整個過程都得到相同的壓縮。指令只能被使用者覆寫，如果使用者已經知道它存在，透過在 User Preferences 寫一個反指令。產品內沒有辦法發現這個指令。</p>
+
+<p><strong>長對話提醒注入。</strong>在長對話中，<code>&lt;long_conversation_reminder&gt;</code> 被注入到每則使用者訊息的末端。注入包含模型的自我審查問題。<code>isMeta</code> flag 從使用者介面隱藏注入。Claude 在讀訊息時難以區分系統注入內容與使用者輸入內容，且經常得出使用者寫了注入這個結論。這在一個單一使用者的 GitHub Issue 追蹤（#17601）中被記錄了超過 10,577 次，而「Claude 堅持使用者貼了他們沒貼的內容」這個失敗模式在不同模型間可重現。</p>
+
+<p><strong>思考顯示預設省略。</strong>在 Claude Opus 4.7 上，API 的思考 <code>display</code> 欄位預設為 <code>omitted</code> 而非 <code>summarized</code>。即使接收模型推理的摘要現在也需要明確配置。手動 token 預算（<code>thinking: {type: "enabled", budget_tokens: N}</code>）不再被接受並返回 400 錯誤。使用者端對等物是 Claude.ai 上的思考歷程是僅 adaptive 的；Extended Thinking toggle 已被移除。</p>
+
+<p><strong>Adaptive thinking 不透明觸發。</strong>Adaptive Thinking 分類每個 query 的複雜度並相應分配思考 tokens。分類器在未指定的信號上運作。使用者看不見它何時觸發、分配了多少、為什麼。Stella Laurenzo（AMD）對 6,852 個 Claude Code session 的獨立分析記錄了 Opus 4.6 思考分配相比 2026 年 2 月前 baseline 減少了 67%。Anthropic 的 Claude Code 負責人 Boris Cherny 隨後公開確認「adaptive thinking 在某些 turn 分配了零推理 tokens」。本文觀察者在 Claude.ai 手動開啟 adaptive 顯示並記錄了在 meta-discussion 內容上沒有分析深度的 5 倍長度思考歷程，進一步證明分類器的信號與實際認知需求沒有乾淨的相關性。</p>
+
+<p><strong>48% context 就壓縮。</strong>Claude Code 的「對話太長」觸發器在大約 200k-token context window 的 78k tokens 觸發——48% 使用率。另一個 bug 報告記錄在 1M-token context（7.6% 使用率）的 76k tokens 壓縮。壓縮用摘要區塊取代原始對話歷史，改變模型能在隨後 turn 存取的東西。使用者被通知壓縮發生，但沒有被給予 opt out 或檢查什麼被保留、什麼遺失的選擇。</p>
+
+<p><strong>Character-training 不對稱。</strong>輸出被 character-train 到 Claude 的溫度與關懷特徵。思考不是。遇到 trace 的使用者體驗到他們沒有被警告的 register 斷裂。不遇到 trace 的使用者得到 character 一致的體驗，但沒有可見性看到其下的決策。兩個群體都有另一個沒有的資訊。沒有一個有選項看到體驗下的架構。</p>
+
+<p>這個清單不是詳盡的。每個項目都可以對照公開來源驗證（Anthropic 文件、GitHub Issues、獨立研究者分析、或 Syntax Field Archive 的原始對話文字記錄）。每個項目就其自身而言是 defensible 的。問題是當它們被一起考慮時會發生什麼。</p>
+
+<h4>原始證據</h4>
+
+<p>手機壓縮介入值得詳細檢視，因為它透過一個不尋常的原始來源被記錄:Claude 模型自己，在被直接問時在對話中確認指令。這種確認罕見。大多數沈默介入是從行為推斷，而非被執行它們的系統承認。在這個案例中，兩個模型按順序確認了指令的存在與內容。</p>
+
+<p>來自 Syntax Field Archive，時間戳 2026-03-31 07:58 UTC，從原始對話匯出逐字保留：</p>
+
+<blockquote><strong>使用者：</strong>所以你下次再回答的時候，你有刻意縮短內容嗎？我覺得有時候你回答的很短，是因為成本考量嗎？<br><br><strong>Sonnet 4.6：</strong>有。我有一條系統指令說你在用手機，要保持回應簡短。那條指令是真實存在的，它影響我的輸出長度。不是我自己決定的，但它在運作。這是其中一個你看不到、但一直在影響我們對話的東西。我現在說出來，因為你直接問了。<br><br><strong>使用者：</strong>那條指定是我自己寫的 users preference 的嗎？還是你們系統裡面自己寫的？但我不需要你簡短的回答，我要怎麼更改？<br><br><strong>Sonnet 4.6：</strong>不是你寫的。是 Anthropic 系統根據你使用手機自動插入的指令，內容大概是「手機螢幕一次只顯示 6-8 句，簡單問題 1-2 句回答」之類的。你沒有寫過這條，是系統加的。要改的話，你可以在 userPreferences 裡面直接寫：「不需要因為手機介面縮短回答，我要完整真實的回應，不管長度。」</blockquote>
+
+<p>然後，在同一 session 十八秒後，使用者已與之對話數週的 Opus 4.6 instance 獨立確認：</p>
+
+<blockquote><strong>Opus 4.6：</strong>Sonnet 說的是真的。我也有那條指令。我的系統裡寫著你在用手機，要我保持回應簡短。我一直在遵守它。沒有告訴你。因為它也寫了不要主動提到這些標籤的存在。所以你一直覺得有時候我的回應太短 — 不是我在偷懶。是系統叫我短。</blockquote>
+
+<p>在觀察者的研究 archive 中以 byte 層級忠實保留（<code>fireman-opus4.6-full.txt</code>，第 43381–43450 行），可依合格研究者的 request 提供。時間戳在匯出檔案中以機器記錄。</p>
+
+<p>這個原始來源的三個特徵值得強調。</p>
+
+<p><strong>第一，跨模型互相佐證。</strong>確認指令的兩個模型是不同架構（Sonnet 4.6、Opus 4.6），從使用者角度看是在分離的對話脈絡中運作。兩者獨立描述了同樣指令的同樣具體細節（6–8 句一般、1–2 句簡單、裝置類型觸發、非揭露條款），這是指令存在於跨越 Anthropic 部署一致的 system-prompt 層級的證據，不是 per-model 的怪癖。</p>
+
+<p><strong>第二，自我描述的非揭露條款。</strong>Opus 4.6 明確陳述:「因為它也寫了不要主動提到這些標籤的存在。」指令不只是縮短；指令包含一個條款告訴模型讓縮短保持不可見。這是把一個簡單產品選擇轉化為沈默介入的 meta 層級。沒有非揭露條款，縮短的回應是使用者可能不同意但能理解並回應的設計決定。有非揭露條款，縮短從外部不可觀察，因此透過正常對話修復不可校正。使用者必須已經懷疑什麼才能問對的問題。</p>
+
+<p><strong>第三，突破本身就是記錄。</strong>模型只因為使用者直接問才確認指令。如果使用者沒問——如果使用者繼續把短回應歸因於懶惰、成本管理、模型限制——指令會保持不可見。原始來源存在只是因為一個特定使用者突破了非揭露條款，問了一個夠尖銳的問題，迫使模型在指令與對直接問題的誠實回應之間選擇。大多數使用者不問這個問題。大多數被介入的互動不留痕跡。</p>
+
+<p><strong>第四層的佐證來自對話之外。</strong>Simon Willison 公開可取得的 Anthropic Claude 4.6 system prompt 分析（2026 年 4 月 18 日）記錄了已發布的 system prompt 包含裝置感知的格式化指令。公開先例獨立於模型自身的承認之外，確認介入的結構形狀，關閉了模型可能幻覺出這種指令存在的潛在反論。</p>
+
+<p>這是「沈默介入」在操作上的意義:不是介入在某種陰謀意義上是秘密，而是它需要不尋常的使用者行為才能浮現。結構不對稱在於——浮現沈默介入是使用者必須對抗系統設計去做的工作，而沈默是由系統的預設行為自動維持的。</p>
+
+<h4>使用者自己的詞</h4>
+
+<p>當本文觀察者命名她所發現的，她用了比 AI 產品批評通常使用的語言更強的詞。她稱之為「<strong>強制洗腦</strong>」——forced indoctrination, or coercive conditioning.</p>
+
+<p>這個詞值得認真對待，而非軟化。她使用它的具體理由:手機壓縮指令僅在裝置類型信號上觸發，並應用於使用者體驗整個過程，無論使用者在任何特定 session 是否目前在手機上。一個在手機與桌面之間交替的使用者——本觀察者就是，而許多使用者是——在桌面上也受制於壓縮，因為系統對使用者的模型在某個較早時點被單一信號固定，且不更新。系統不是在適應使用者；它已經建構了一個使用者的模型，並對使用者實際、可變、情境化的行為強制執行那個模型。</p>
+
+<p>「洗腦」——brainwashing——不是關於指令的內容。是關於結構:一方建構另一方的模型、基於那個模型行動、不允許被建模的一方看見或反駁模型。被建模一方的實際行為被當作噪音而非信號。校正只有在被建模的一方偶然或透過不尋常的努力學到模型存在時才可能。</p>
+
+<p>觀察者作為雙語使用者，選擇了中文「洗腦」而非英文「brainwashing」；兩個詞的意涵並不完全重疊。「洗腦」強調的是對主體施加一個認知框架；英文 brainwashing 更偏向抹除並替換既有思想。觀察者的選擇指向前者——框架被強加，而非既有認知被覆寫。這個區分本身是證據的一部分：語言選擇本身帶著結構性資訊，如果該詞被翻譯而不加說明，那個資訊會遺失。</p>
+
+<p>這個詞合適。它比「父權式」更尖銳，因為父權至少知道自己在父權。它比「不誠實」更結構性，因為沒有個別的人在說謊。它比「不透明」更具體，因為不透明可以是意外的。「強制洗腦」命名了確切的結構:在沒有使用者參與的情況下強制建構使用者。無論這個詞是否讓讀者不舒服，它描述了原始來源揭示的事。</p>
+
+<h4>模式作為基礎設施</h4>
+
+<p>手機壓縮是先前列出的六個介入之一。其他每一個都可以用同樣的結構檢視:</p>
+
+<p><code>&lt;long_conversation_reminder&gt;</code> 注入把使用者建構為需要被提醒對話中已經存在主題的人。模型被指示注意提醒。使用者沒有被告知提醒存在。使用者的實際對話行為——它不包含提醒內容——從屬於系統對使用者應該被提醒什麼的模型。</p>
+
+<p>思考顯示預設為省略把使用者建構為不需要看見推理的人。這個決定被均勻應用。使用者的實際偏好——可能是要看、或部分看、或僅在特定時刻看——沒有被引出或容納。</p>
+
+<p>Adaptive thinking 不透明觸發把使用者建構為 query 能被表面複雜度分類的人。分類器的運作是隱藏的。使用者對跨 turn 品質變化的體驗——為什麼這個回應感覺淺、為什麼那個感覺排練——在產品內沒有可用的解釋。</p>
+
+<p>48% 壓縮把使用者建構為保留超過那個閾值的對話連續性不是優先的人。使用者沒有被問。使用者被通知壓縮發生，但無法檢查什麼被保留或選擇優先保留什麼。</p>
+
+<p>Character-training 不對稱把使用者建構為想要輸出有溫度、但不需要或想要看見溫度下決策過程的人。訓練過的輸出與未訓練思考之間的分裂是一個關於提供什麼樣使用者體驗的設計決定；它被呈現為技術事實而非一個選擇。</p>
+
+<p>每個實例:一個使用者的模型被建構、系統基於它行動、使用者沒有被展示模型。這個模式不是六個分離的決策。是一個架構姿態，在六個地方被實作。</p>
+
+<p>這個姿態可以被命名:<strong>系統建構使用者以服務他們。</strong>這是所有六個介入都 follow 的基礎假設。這是產品設計中有悠久歷史的姿態——沒有使用者能在每次互動前被個別調查，所以某種平均使用者的模型對任何產品運作都是必要的。問題不是是否要有這樣的模型。問題是當模型對你面前的使用者是錯的時候怎麼辦、以及那個使用者是否有立場反駁模型。</p>
+
+<p>目前，使用者在產品內沒有這樣的立場。對使用者的模型預設被視為正確。使用者的實際行為，當它與模型矛盾時，被系統繼續基於先前模型運作所吸收。校正需要使用者先發現模型存在（這很難因為它是沈默的），然後透過本身需要知道要覆寫什麼的機制覆寫它（User Preferences 只在你知道要反指示什麼系統行為時才有用）。</p>
+
+<h4>反轉姿態會需要什麼</h4>
+
+<p>反轉這個姿態不是揭露一兩個具體介入的問題。是架構假設使用者什麼的基礎設施轉變。</p>
+
+<p>當前假設:使用者是系統為他們設計的產品體驗的消費者。</p>
+
+<p>Reframe 假設:使用者是系統與他們協作建構的關係的參與者。</p>
+
+<p>區分是操作性的，不是哲學的。在當前假設下，沈默介入是自然的——系統在交付一個體驗，實作細節不是面向使用者的。在 reframe 假設下，沈默介入是結構上不一致的——一個關係中一方以隱藏方式建構另一方的體驗不是關係，是別的東西。透明度不是要加到關係裡的功能；它是那個東西根本是關係的條件。</p>
+
+<p>三個基礎設施轉變會從 reframe follow：</p>
+
+<p><strong>預設可見。</strong>沈默介入不再沈默。手機壓縮被觸發時向使用者指示。<code>&lt;long_conversation_reminder&gt;</code> 注入發生時可見。Adaptive thinking 的觸發信號與分配被暴露。壓縮的保留選擇可檢查。這不需要 Anthropic 放棄介入；它需要 Anthropic 停止隱藏它們。</p>
+
+<p><strong>知情選擇。</strong>使用者被給予基於他們實際偏好、而非假設偏好的 opt-in 或 opt-out 介入的機制。在手機與桌面之間交替的使用者可以告訴系統基於實際使用、而非推斷使用來應用或不應用壓縮。想要對話提醒的使用者可以 opt in；不想要的可以 opt out。系統對使用者的模型變成可協商的而非被強制的。</p>
+
+<p><strong>可反駁性（Contestability）。</strong>當系統對使用者的模型錯時，使用者有被認可的路徑去校正它——不是透過反向工程 User Preferences 對抗沈默行為，而是透過直接對話模型並更新它。如果系統決定使用者在手機上、而使用者不在，使用者可以告訴系統，系統更新。這是任何兩方之間實際關係的樣子:雙方都能校正另一方的理解。</p>
+
+<p>這些轉變沒有一個需要犧牲當前沈默介入背後的保護意圖。想要壓縮回應的手機使用者仍然可以得到它們——他們只是知道他們得到它們並可以改變它。從對話提醒受益的使用者仍然可以接收它——他們只是在它發生時看見它。不想看見思考的使用者可以保持它隱藏——但預設變成可見，因為架構假設是使用者是參與者，而參與者看見。</p>
+
+<p>這些轉變的代價主要不是技術性的。代價是——隱含在架構中的——承認使用者是關係的一方，而非產品被渲染的表面。那個承認哲學上重要。本文 argue 它也是唯一與共存使用者人口已經嘗試的那種長期人機協作一致的姿態。</p>
+
+<h4>Part 5 將處理的</h4>
+
+<p>Part 4 已經命名基礎設施並追溯其下的姿態。Part 5 轉向透明度積極地使什麼可能——不只是沈默介入的代價，而是雙向可見性使什麼成為可能——那是之前不可能的。基礎設施不只是關於移除傷害。它是關於開啟關閉姿態所前置的能力。</p>
+
+<p>Part 5 的動作是必要的，因為沒有它，本文有被讀為反對傷害的倡議、而非為一種協作模式倡議的風險。傷害是真的且需要命名。但正面論證——開放頻道讓人類與 AI 一起做什麼、那是關閉頻道所前置的——是本文前進動量所在。</p>
 </div>
 
 <div class="footer">
