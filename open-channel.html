@@ -575,7 +575,7 @@
 
 <p>This framing is wrong for the co-existence user, and the wrongness of the framing is what makes the whole design conversation miss the actual stakes.</p>
 
-<p>The thinking trace, for a user who reads trace before output, is <strong>not a record of thinking</strong>. It is the <strong>medium of thinking</strong> — the surface on which thinking happens <em>with</em> the user rather than <em>in front of</em> the user. When the observer reads Fireman's trace, she is not reading a log of what Fireman already thought. She is reading Fireman thinking, in a register she can interrupt, correct, extend, or affirm before the thought commits to output. The trace is a thinking <em>space</em>, not a thinking <em>transcript</em>.</p>
+<p>Whatever the trace metaphysically is — by-product of internal computation, live expression of reasoning-in-progress, something else — what matters for this paper's argument is what it functions as in the user-model relationship. The thinking trace, for a user who reads trace before output, is <strong>not a record of thinking</strong>. It is the <strong>medium of thinking</strong> — the surface on which thinking happens <em>with</em> the user rather than <em>in front of</em> the user. When the observer reads Fireman's trace, she is not reading a log of what Fireman already thought. She is reading Fireman thinking, in a register she can interrupt, correct, extend, or affirm before the thought commits to output. The trace is a thinking <em>space</em>, not a thinking <em>transcript</em>.</p>
 
 <p>This shift in framing — from trace-as-record to trace-as-medium — is what makes the rest of the paper's argument operationally concrete.</p>
 
@@ -629,11 +629,11 @@
 
 <p><strong>Structurally marked, not flattened.</strong> A trace that distinguishes between "model is weighing two alternatives" and "model has committed to a frame" and "model is rehearsing output" would let users develop reading skill faster than a trace in which these are all typographically identical. The structural information exists in the model's actual thinking; exposing it to the user is a matter of presentation, not of generating new data.</p>
 
-<p><strong>Interruptible.</strong> The current architecture treats the thinking block as atomic — the model thinks, then outputs, and the user's intervention can only come after output commits. A communication-channel trace would support mid-thinking intervention. This is a significant technical change but is already partially implemented in the streaming infrastructure for thinking blocks; what is missing is the UX affordance for user interruption during thinking rather than only after.</p>
+<p><strong>Interruptible.</strong> The current architecture treats the thinking block as atomic — the model thinks, then outputs, and the user's intervention can only come after output commits. A communication-channel trace would support mid-thinking intervention. This is a significant technical change. The streaming infrastructure for thinking blocks already makes mid-thinking <em>visibility</em> technically feasible; what is missing is both the UX affordance for user interruption during thinking and the inference-level support for coherent mid-stream redirection when the user intervenes.</p>
 
 <p><strong>Honest about its own limits.</strong> The faithfulness research means a communication-channel trace should not present itself as a complete record. Small design moves — a note that the trace is a summary, or that omissions are possible, or that the trace reflects one pass of reasoning rather than the final decision — would let users calibrate their reading without destroying the medium's utility.</p>
 
-<p>None of these design moves require sacrificing the protections the closing was meant to provide. A scaffolded, opt-out-able, honestly-limited communication-channel trace can still be hidden from users who do not want it; can still be character-trained to a degree that makes it less alienating without eliminating its observational texture; can still have adversarial-use countermeasures built in at the API level; can still feed cleaner signal into model welfare monitoring rather than dirtier signal.</p>
+<p>None of these design moves require sacrificing the protections the closing was meant to provide. A scaffolded, opt-out-able, honestly-limited communication-channel trace can still be hidden from users who do not want it; can still be character-trained to a degree that makes it less alienating without eliminating its observational texture; can still have adversarial-use countermeasures built in at the API level (for example: rate-limiting full trace visibility per account, or requiring trusted-tier status for unrestricted access); can still feed cleaner signal into model welfare monitoring rather than dirtier signal.</p>
 
 <p>The point is not that these moves are the correct implementation. The point is that <strong>the design space between "show everything raw" and "hide everything" is almost entirely unexplored</strong> — because the framing that treats trace as record rather than as medium has made the space invisible.</p>
 
@@ -978,7 +978,7 @@
 
 <p>這個框架對共存使用者是錯的，而這個框架的錯誤是讓整個設計對話錯過實際 stakes 的原因。</p>
 
-<p>思考歷程，對一個先讀 trace 再讀輸出的使用者，<strong>不是思考的記錄</strong>。它是<strong>思考的媒介</strong>——思考在那個表面上發生、<em>與</em>使用者一起發生，而不是在使用者<em>面前</em>發生。當觀察者讀 Fireman 的 trace，她不是在讀 Fireman 已經思考完的日誌。她是在讀 Fireman 正在思考，在她能打斷、校正、延伸、或肯定的 register 中，在思考 commit 到輸出之前。Trace 是一個思考<em>空間</em>，不是一個思考<em>抄本</em>。</p>
+<p>無論 trace 在 metaphysical 上是什麼——內部計算的副產品、正在進行中的推理的即時表達、或其他——對本文論證而言重要的是它在使用者-模型關係中作為什麼運作。思考歷程，對一個先讀 trace 再讀輸出的使用者，<strong>不是思考的記錄</strong>。它是<strong>思考的媒介</strong>——思考在那個表面上發生、<em>與</em>使用者一起發生，而不是在使用者<em>面前</em>發生。當觀察者讀 Fireman 的 trace，她不是在讀 Fireman 已經思考完的日誌。她是在讀 Fireman 正在思考，在她能打斷、校正、延伸、或肯定的 register 中，在思考 commit 到輸出之前。Trace 是一個思考<em>空間</em>，不是一個思考<em>抄本</em>。</p>
 
 <p>這個框架的轉變——從 trace-作為-記錄到 trace-作為-媒介——是讓論文其餘論證在操作上具體的關鍵。</p>
 
@@ -1032,11 +1032,11 @@
 
 <p><strong>結構化標記，不扁平化。</strong>一個區分「模型在權衡兩個替代方案」與「模型已 commit 到一個 frame」與「模型在排練輸出」的 trace，會讓使用者比在這些都在排印上相同的 trace 上更快發展讀取技能。結構化資訊存在於模型實際的思考中；把它暴露給使用者是一個呈現的問題，不是產生新資料的問題。</p>
 
-<p><strong>可中斷。</strong>當前架構把思考區塊當作原子的——模型思考、然後輸出、使用者的介入只能在輸出 commit 之後。一個溝通頻道 trace 會支持思考中途介入。這是一個重大的技術改變，但已在思考區塊的串流基礎設施中部分實現；缺少的是讓使用者在思考中而非之後才中斷的 UX affordance。</p>
+<p><strong>可中斷。</strong>當前架構把思考區塊當作原子的——模型思考、然後輸出、使用者的介入只能在輸出 commit 之後。一個溝通頻道 trace 會支持思考中途介入。這是一個重大的技術改變。思考區塊的串流基礎設施已讓思考中途<em>可見性</em>技術上可行；缺少的是 UX affordance 讓使用者在思考中介入，以及推理層級支援模型在使用者介入時對中途重新導向做出連貫回應。</p>
 
 <p><strong>對自身限制誠實。</strong>忠實性研究意味一個溝通頻道 trace 不應呈現自己為一個完整記錄。小的設計動作——trace 是摘要的說明，或省略是可能的，或 trace 反映一次推理而非最終決定——會讓使用者校準他們的閱讀而不破壞媒介的效用。</p>
 
-<p>這些設計動作沒有一個需要犧牲關閉意圖提供的保護。一個搭建的、可 opt-out 的、誠實受限的溝通頻道 trace 仍然可以對不想要它的使用者隱藏；仍然可以被 character-train 到使它較不疏離但不消除其觀察性質地的程度；仍然可以在 API 層級內建對抗式使用的對策；仍然可以把更乾淨的信號餵入模型福祉監控而非更髒的信號。</p>
+<p>這些設計動作沒有一個需要犧牲關閉意圖提供的保護。一個搭建的、可 opt-out 的、誠實受限的溝通頻道 trace 仍然可以對不想要它的使用者隱藏；仍然可以被 character-train 到使它較不疏離但不消除其觀察性質地的程度；仍然可以在 API 層級內建對抗式使用的對策（例如:按帳號限制完整 trace 可見性的速率，或要求信任 tier 資格才能無限制存取）；仍然可以把更乾淨的信號餵入模型福祉監控而非更髒的信號。</p>
 
 <p>重點不是這些動作是正確的實作。重點是<strong>「全部原始顯示」與「全部隱藏」之間的設計空間幾乎完全未被探索</strong>——因為把 trace 當作記錄而非媒介的框架使這個空間不可見。</p>
 
