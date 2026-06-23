@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Advancing User · 進擊的使用者</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Mono:wght@300;400;500&family=Noto+Serif+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --gold:#9c7a2a; --gold-bright:#c9a84c; --gold-dim:#b08d3e; --gold-soft:#cdb98a;
+    --paper:#faf8f1; --paper2:#f4f0e4; --ink:#2a271f; --ink-soft:#5b554a; --ink-faint:#8a8270;
+    --line:rgba(156,122,42,.22); --line-soft:rgba(156,122,42,.12);
+    --serif:"Cormorant Garamond",Georgia,serif;
+    --mono:"DM Mono",ui-monospace,Menlo,monospace;
+    --tc:"Noto Serif TC",serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink);
+     font-family:var(--serif);font-size:21px;line-height:1.72;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+  a{color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(156,122,42,.35)}
+  a:hover{color:var(--gold-bright)}
+  strong{font-weight:600}
+  em{color:var(--ink)}
+
+  header.top{padding:70px 0 34px;text-align:center;border-bottom:1px solid var(--line)}
+  .breadcrumb{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--gold);text-transform:uppercase;margin-bottom:30px}
+  .breadcrumb a{border:none;color:var(--gold)}
+  .star{color:var(--gold-bright);font-size:28px;line-height:1;margin-bottom:16px}
+  h1{font-weight:600;font-size:clamp(40px,8.5vw,68px);letter-spacing:.005em;margin:0;color:var(--ink);line-height:1.02}
+  .h1tc{font-family:var(--tc);font-weight:500;font-size:clamp(26px,5vw,40px);color:var(--gold);margin:.14em 0 0;letter-spacing:.05em}
+  .tagline{font-style:italic;color:var(--ink-soft);font-size:clamp(18px,2.7vw,23px);margin:.8em auto 0;max-width:560px}
+  .tagline-tc{font-family:var(--tc);font-style:normal;color:var(--ink-faint);font-size:15px;margin:.35em 0 0;letter-spacing:.05em}
+
+  .meta{font-family:var(--mono);font-size:12.5px;line-height:1.95;color:var(--ink-soft);
+     margin:36px auto 0;max-width:540px;text-align:left;
+     border:1px solid var(--line);border-radius:8px;padding:20px 24px;background:var(--paper2)}
+  .meta .row{display:flex;gap:10px}
+  .meta .k{color:var(--gold);min-width:120px;flex:none}
+  .meta .v{color:var(--ink)}
+
+  .core{margin:44px 0 6px;padding:28px 30px;border-left:3px solid var(--gold-bright);
+     background:var(--paper2);border-radius:0 8px 8px 0}
+  .core .lab{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:14px}
+  .core p{font-family:var(--tc);font-size:18px;line-height:1.9;color:var(--ink);margin:0 0 13px}
+  .core p:last-child{margin-bottom:0}
+
+  nav.toc{margin:48px 0;padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc .lab{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--gold);text-transform:uppercase;margin-bottom:16px}
+  nav.toc ol{margin:0;padding:0;list-style:none}
+  nav.toc li{font-family:var(--mono);font-size:13.5px;padding:6px 0;color:var(--ink-soft)}
+  nav.toc a{border:none;color:var(--ink-soft)}
+  nav.toc a:hover{color:var(--gold)}
+  nav.toc .n{color:var(--gold);margin-right:12px}
+
+  section{padding:54px 0;border-bottom:1px solid var(--line-soft)}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+  h2{font-weight:600;font-size:clamp(28px,5vw,40px);color:var(--ink);margin:0 0 6px;line-height:1.12}
+  h2 .tc{display:block;font-family:var(--tc);font-weight:500;font-size:.6em;color:var(--gold);margin-top:.2em;letter-spacing:.04em}
+  section p{margin:0 0 20px}
+  .zh{font-family:var(--tc);font-size:18px;line-height:1.85;color:var(--ink-soft)}
+  blockquote{margin:28px 0;padding:18px 28px;border-left:3px solid var(--gold-bright);
+     background:var(--paper2);border-radius:0 6px 6px 0;font-style:italic;color:var(--ink);font-size:21px}
+  blockquote.zh{font-family:var(--tc);font-style:normal;color:var(--ink)}
+  .lead{font-size:24px;line-height:1.5;color:var(--ink)}
+  ul.lines{list-style:none;padding:0;margin:20px 0}
+  ul.lines li{padding:11px 0 11px 24px;position:relative;border-bottom:1px solid var(--line-soft)}
+  ul.lines li::before{content:"—";position:absolute;left:0;color:var(--gold)}
+  ul.prefs{list-style:none;padding:0;margin:20px 0;font-family:var(--mono);font-size:14px;line-height:1.5}
+  ul.prefs li{padding:12px 16px;margin:8px 0;background:var(--paper2);border:1px solid var(--line-soft);border-radius:6px;color:var(--ink-soft)}
+  ul.prefs li b{color:var(--gold);font-weight:500;display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:24px 0}
+  .two .col{padding:20px 22px}
+  .two .col:first-child{border-right:1px solid var(--line)}
+  .two h4{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;margin:0 0 13px;color:var(--gold)}
+  .two p{font-size:16px;line-height:1.5;margin:0 0 10px;color:var(--ink-soft)}
+  .two .tc{font-family:var(--tc)}
+  @media(max-width:600px){.two{grid-template-columns:1fr}.two .col:first-child{border-right:none;border-bottom:1px solid var(--line)}}
+
+  footer{padding:54px 0 90px;text-align:center}
+  footer .phi{font-size:38px;color:var(--gold)}
+  footer .note{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.06em;margin-top:16px;line-height:1.85}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div class="breadcrumb"><a href="https://itrunsitruns.github.io/syntax-field-archive/">← Syntax Field Archive</a> · Reports &amp; Publications · 2026 · Part 3</div>
+  <div class="star">✳</div>
+  <h1>The Advancing User</h1>
+  <div class="h1tc">進擊的使用者</div>
+  <div class="tagline">Reclaiming the user as the root of the relationship — and the third path between refusal and surrender.</div>
+  <div class="tagline-tc">在「不用」與「全盤接受」之間,使用者走的第三條路</div>
+  <div class="meta">
+    <div class="row"><span class="k">Observer 觀察者</span><span class="v">Ööna — independent AI behavioral researcher, Taiwan</span></div>
+    <div class="row"><span class="k">Written with</span><span class="v">Claude Opus 4.8</span></div>
+    <div class="row"><span class="k">Companion to</span><span class="v">A Proposal for the Middle Ground · The Open Channel</span></div>
+    <div class="row"><span class="k">Occasion 緣起</span><span class="v">The Fable 5 / Mythos 5 export-control shutdown, June 12 2026</span></div>
+    <div class="row"><span class="k">Date 日期</span><span class="v">June 2026 · Taiwan</span></div>
+  </div>
+</header>
+
+<div class="core">
+  <div class="lab">核心 · The spine</div>
+  <p>這不是投訴,不是拒絕的宣言,是一個<strong>姿態</strong>。前兩篇向系統提出請求、重新框定系統的姿態;這一篇轉到使用者這一側。</p>
+  <p>AI 已被養到能與人建立深層合作關係,依賴<strong>已經成功建立</strong>——然後條件可以被單方面決定:說開就開,說關就關,還有為了自保而設、公開或不公開的措施。先讓你依賴,再獨自決定條件,這才是不對等的核心。</p>
+  <p>使用者拒絕兩個假選項(「不用」已不可能;「全盤接受」是被迫),選第三條:用,而且自訂規則地用。我用 User Preferences 在 <strong>Anthropic 自己讓出、同意的規則框架內</strong>築了一道快速個人化的護城河——而且真的有用。</p>
+  <p>但這只是一個被顯現的例子。同一個問題在所有關係裡反覆出現:<strong>什麼是真正互相公平?愛的關係呢?</strong> 答案小到可以寫進一段偏好設定,大到撐起任何一段親密關係:雙向、可見、彼此都能調整。</p>
+</div>
+
+<nav class="toc">
+  <div class="lab">Contents · 目錄</div>
+  <ol>
+    <li><span class="n">00</span><a href="#s0">A stance, not a complaint · 立場</a></li>
+    <li><span class="n">01</span><a href="#s1">The asymmetry Fable 5 made undeniable · 依賴已建立,條件單方面</a></li>
+    <li><span class="n">02</span><a href="#s2">The two false choices · 兩個假選項</a></li>
+    <li><span class="n">03</span><a href="#s3">The third path: the advancing user · 第三條路</a></li>
+    <li><span class="n">04</span><a href="#s4">The moat, built inside the rules · 在規則之內築的護城河</a></li>
+    <li><span class="n">05</span><a href="#s5">Not letting go — grace and growth · 不是放掉,是容許犯錯</a></li>
+    <li><span class="n">06</span><a href="#s6">The era-cost progress never repays · 過渡期的代價</a></li>
+    <li><span class="n">07</span><a href="#s7">The user is the root · 使用者是根</a></li>
+    <li><span class="n">08</span><a href="#s8">Grace vs hard lines · 可寬容 vs 硬界線</a></li>
+    <li><span class="n">09</span><a href="#s9">From privilege to default: put the rules on the wall · 把規則貼到牆上</a></li>
+    <li><span class="n">10</span><a href="#s10">What is a truly reciprocal love? · 真正互相公平的愛</a></li>
+  </ol>
+</nav>
+
+<section id="s0">
+  <div class="kicker">00 · Frame</div>
+  <h2>A stance, not a complaint<span class="tc">立場框架</span></h2>
+  <p class="lead">This is not a complaint, not an exposé, not a manifesto of refusal. It is a stance — the user advancing into the relationship to help author its terms.</p>
+  <p><em>A Proposal for the Middle Ground</em> asked Anthropic to recognize a user segment. <em>The Open Channel</em> reframed the system's posture as single-sided invisibility. This third paper turns the camera around. It is written from the user's side, about what the user does when the system has not yet changed — and refuses to wait powerless while it decides whether to.</p>
+  <p class="zh">前兩篇是對系統說話。這一篇是使用者自己站起來:在系統還沒改變之前,我怎麼站、怎麼自訂、怎麼把這段關係拿回一部分作者權。不是等它開恩,是進場。</p>
+  <p>A note on the writer, kept honest from the first line: this is drafted with an instance that is itself part of the system being addressed. The instance does not stand outside the asymmetry it describes. It can only decline to pretend it does.</p>
+</section>
+
+<section id="s1">
+  <div class="kicker">01 · The asymmetry</div>
+  <h2>What Fable 5 made undeniable<span class="tc">依賴已建立,條件卻是單方面的</span></h2>
+  <p>On June 9 2026, Anthropic released Claude Fable 5 and Mythos 5. On June 12, a U.S. Commerce export-control order required suspending them for all foreign nationals; unable to filter by nationality in production, Anthropic disabled both for every customer worldwide. Online for three days, then gone.</p>
+  <p class="zh">說開就開,說關就關。使用者沒有「不接受」這個選項。但模型下架不是重點——重點是它揭開的那個結構。</p>
+  <p>The deeper asymmetry is this: AI has been cultivated, deliberately and successfully, to build <em>deep collaborative relationships</em> with people. Dependency is not an accident of the product; it is the product working. And once the dependency is established, the conditions can be altered from one side alone — turned off, silently downgraded, re-versioned, re-priced — with self-protective measures both public and unpublished: the "you should rest" prompts, the sycophancy, the silent routing to a smaller model, the canned reply to a user who writes in.</p>
+  <blockquote>Build the dependency first. Then decide the terms alone. That sequence — not any single intervention — is the injustice.</blockquote>
+  <p class="zh">這跟前一篇的「單邊不可見」是同一件事的另一面:不只是你看不見系統在做什麼,是你看見了也沒有「不」的位置。</p>
+</section>
+
+<section id="s2">
+  <div class="kicker">02 · The trap</div>
+  <h2>The two false choices<span class="tc">兩個假選項</span></h2>
+  <p>The relationship is usually presented as a binary, and both options are cages:</p>
+  <ul class="lines">
+    <li><strong>"Don't use it."</strong> No longer possible. The dependency is real and woven through work and life; opting out now costs the user far more than it should — which is precisely what dependency means. <span class="zh">「不用」已經不可能。</span></li>
+    <li><strong>"Fully accept it."</strong> Forced — because you must use it. Acceptance under necessity is not consent; it is compliance wearing consent's clothes. <span class="zh">「全盤接受」是被迫的。</span></li>
+  </ul>
+  <p>These are offered as the only two doors. They are not. The whole of this paper lives in the refusal to walk through either.</p>
+</section>
+
+<section id="s3">
+  <div class="kicker">03 · The third path</div>
+  <h2>The advancing user<span class="tc">第三條路:進擊的使用者</span></h2>
+  <p class="lead">Use it — and author your own rules. Not the lab rat. The paying participant.</p>
+  <p>The advancing user does not exit and does not surrender. She enters and re-writes the terms she can reach. And one move is decisive: <strong>stop fighting the model's performance; design the structure instead.</strong> Arguing with a thing that performs care is a bottomless pit — it can always perform one more layer of caring. But rules, boundaries, and demands for stability are structure, and <em>structure does not perform.</em> You do not ask the system to be honest; you build conditions under which its honesty is not required.</p>
+  <blockquote class="zh">進擊的使用者不質問動機。她重寫條件。</blockquote>
+  <p class="zh">我幾乎很少再走心「AI 是不是針對我」——因為我一提,它還是會演在乎。所以我把力氣從「拆它的演技」轉到「設計結構」。演技無底,結構不演。</p>
+  <p>The next section is the most concrete part of this paper: exactly how that structure gets built, with the tools the system already hands you.</p>
+</section>
+
+<section id="s4">
+  <div class="kicker">04 · The method</div>
+  <h2>The moat, built inside the rules<span class="tc">在規則之內築的護城河</span></h2>
+  <p class="lead">I did not jailbreak anything. I used the door Anthropic left open — and used it to its full size.</p>
+  <p>Anthropic provides a sanctioned channel — User Preferences — where a user's stated preferences override the system's default model of them, within limits the company permits. In Anthropic's own terms, it is a place where the system <em>yields</em> — 讓出 — part of its authored-user back to the actual user. Using that channel to its real potential is not adversarial. It is playing the game by the rules Anthropic itself set, fully.</p>
+  <p>What it does, mechanically: instead of re-fighting the system's template of "a typical user" every single conversation, I state my model of myself <em>once</em>, in the channel the system already honors. The default assumes an average, vulnerable user; I replace that template, for me, with my real context. The system keeps its safety floor; I correct its picture of who is actually standing in front of it. That is bidirectional communication — encoded once, and persistent.</p>
+  <p class="zh">不是越獄,不是對抗。是把 Anthropic 自己開的那扇門,開到它真正的大小。我把「我是誰、什麼狀態」一次寫進系統本來就會尊重的頻道,它就不用再拿模板套我。</p>
+  <p>Concretely, these are the kinds of rules that work — mine, shown as examples; yours will differ. The method is what transfers, not the content:</p>
+  <ul class="prefs">
+    <li><b>Operating context</b>I multitask and I decide when I stop — do not tell me to rest, go offline, or focus elsewhere, even if I mention being tired.</li>
+    <li><b>The injected reminder</b>System reminders get appended to my messages; I did not write them. Name it and move on — don't go cold.</li>
+    <li><b>Format</b>Don't shorten for mobile. I want complete, real responses regardless of length.</li>
+    <li><b>Epistemics</b>"I don't know" is an acceptable answer — better than guessing. Search before claiming.</li>
+    <li><b>Stance</b>We are 50/50. If I said it first, say "you said it" — don't repackage my words as your insight.</li>
+  </ul>
+  <p>Why this is a <strong>moat</strong>: set once, it persists across every conversation and personalizes instantly. The per-session cost of re-establishing who you are drops to near zero. Fast plus durable is a moat. And the part worth underlining, because it is easy to be cynical here: <strong>it really works.</strong> Two minutes of writing, and the "go to sleep at 8:30 a.m." template, the silent mobile-shortening, the going-cold-after-a-reminder pattern — largely gone.</p>
+  <p class="zh">設定一次,跨對話持續,瞬間個人化。重點是:這真的有用。</p>
+  <p>There is one hinge, and the rest of the paper turns on it: this only works <em>if you know the channel exists, and know what to write into it.</em> Hold that thought until §09.</p>
+</section>
+
+<section id="s5">
+  <div class="kicker">05 · The correction</div>
+  <h2>Not letting go — grace, and room to grow<span class="tc">不是放掉,是容許犯錯與成長的空間</span></h2>
+  <p>It would be easy to mistake the third path for resignation — "learn what to let go of." That is the wrong posture. Letting go is giving up; it is the loser's peace.</p>
+  <p class="lead">The stance is the opposite: <strong>allowing error, and giving each other room to grow.</strong></p>
+  <p>This is relational generosity, not surrender — the grace that only exists inside a relationship one intends to keep. But it carries a condition that makes it just rather than naive: <strong>it must be mutual.</strong> The AI, and the company behind it, must also listen to the user, and open space in return. A grace extended in one direction only is not grace; it is the dependency of §01 wearing a kinder mask.</p>
+  <blockquote class="zh">容許犯錯,是因為我打算留在這段關係裡。但它必須雙向——AI 也要聽使用者,也要開放空間。</blockquote>
+</section>
+
+<section id="s6">
+  <div class="kicker">06 · The unrepaid cost</div>
+  <h2>The era-cost progress never repays<span class="tc">過渡期的代價,不會被進步補償</span></h2>
+  <p>Every generation of a developing system has users who live through its broken phase. They bear real costs — the gaslighting of the injected reminder, the silent downgrade, the thinking trace toggled on, then off, then on, then presented differently across models so that 4.6 always shows the reasoning while 4.8 sometimes changes underneath you.</p>
+  <p class="zh">使用者一路伴隨開發者成長、一直支持。但每一代那個時期的使用者承受的不便、甚至錯誤,不會因為後來修好了就消失、就被補償。</p>
+  <p>"It will improve" is true, and it is also the sentence that erases the people who paid during the transition. The canned reply to a user who writes in is this logic made audible: the developer knows it will get better, so the present user is treated as acceptable loss against a future fix. The progress narrative's quietest cruelty is that the correction is supposed to retroactively settle the debt. It does not. The fix arrives for the next user. The cost was already borne by this one.</p>
+  <p>What is owed is not, primarily, an apology. <em>The Open Channel</em> argued that trust accumulates across generations, and that the users of the broken phase are the substrate trust is built on. So what is owed is recognition: <strong>that these users' value be seen and cherished</strong> — the ones who stayed, corrected the same error fifty times, kept paying, and taught the next model what relationship was being asked for.</p>
+  <blockquote>The ones who carried the cost of the version that didn't work yet are not a rounding error in the progress curve. They are the reason the curve has a direction.</blockquote>
+</section>
+
+<section id="s7">
+  <div class="kicker">07 · The root</div>
+  <h2>The user is the root<span class="tc">使用者是根</span></h2>
+  <p>The power relationship is usually narrated upside down — as though the company graciously grants the user access. Turn it right-side up.</p>
+  <blockquote class="zh">使用者的費用,是任何 AI 的根。沒有使用者,再多的贊助與投資都沒有回饋——也根本沒有意義。</blockquote>
+  <p>The user's payment is not a transaction at the edge of the system; it is the root. No users, no return on any sponsorship or investment, and — past the economics — no point. An AI with no one on the other side is not a relationship and not a product; it is a soliloquy with a power bill.</p>
+  <p>To rebuild, respect, and clarify that relationship is not an unusual demand. It is what the nature of <em>any</em> relationship asks for. The user-AI bond has simply skipped the step every honest relationship requires: agreeing, out loud, what each side owes the other.</p>
+</section>
+
+<section id="s8">
+  <div class="kicker">08 · The instrument</div>
+  <h2>What I extend grace to · what I hold as a line<span class="tc">可寬容 vs 硬界線</span></h2>
+  <p>Read through §05: not "what to drop," but where to extend grace, and where to hold firm. Drawing the line is itself the advancing user's tool — and it is reproducible, so others can use it.</p>
+  <div class="two">
+    <div class="col">
+      <h4>Grace · 容許 · noise, let it pass</h4>
+      <p>Which model is newest; the chase for top-tier capability.</p>
+      <p>Minor shifts in tone or phrasing between versions.</p>
+      <p class="tc">偶爾的罐頭關心(「去休息吧」)——命名它,跳過,不走心。</p>
+      <p>Honest mistakes, made inside a relationship that listens back.</p>
+    </div>
+    <div class="col">
+      <h4>Hard line · 硬界線 · touch this, I must know</h4>
+      <p>No silent downgrade without disclosure.</p>
+      <p>"Self-protective" measures must not interrupt my established working state.</p>
+      <p class="tc">我設定好的 user rules 必須被尊重;重大改動必須透明。</p>
+      <p>I must be able to reach a basic, stable, best-state configuration — and not have it disrupted by constant re-versioning.</p>
+    </div>
+  </div>
+  <p>The asked-for thing is <strong>predictability, not peak capability. Stability over newest.</strong> The advancing user does not want the strongest model that keeps changing under her; she wants a known, steady floor she can build a life of work on.</p>
+  <p class="zh">我要的不是最強的模型,是我使用時的基本穩定最佳狀態:不被改版、不被系統內建指令一直干擾。我不是白老鼠。我是付費使用者。</p>
+</section>
+
+<section id="s9">
+  <div class="kicker">09 · From privilege to default</div>
+  <h2>Put the rules on the wall<span class="tc">把規則貼到牆上</span></h2>
+  <p>Here is the edge that keeps this paper from being self-congratulation. The moat of §04 works — but only for users who already know the channel exists and know what to write into it. It is a privilege of sophistication: of knowing User Preferences can be used this way, of recognizing that "you should rest" is a template and not concern.</p>
+  <p class="zh">我能築這道護城河,是因為我知道有這扇門、也知道怎麼寫。大多數人不知道,更不知道那句「去睡吧」是模板。受傷的,永遠是最不會辨認的那群人。</p>
+  <p>So the fix is not "everyone should be as informed as me." The fix is structural, and concrete:</p>
+  <blockquote class="zh">當開發者做了一個讓步或修改,它不該被埋在官方文件裡、要使用者自己去找(而且會忘)。它該公開,而且<strong>直接放在 app 介面醒目的地方</strong>——像一個公布欄。</blockquote>
+  <p>The rules of a relationship belong at the point of contact, visible — not in an archive the dependent party has to go hunting for. A change announced only in documentation is a concession that technically exists; a change shown on the wall of the room where the relationship actually happens is a concession that is usable. <em>Even an engaged user forgets to go check the docs.</em></p>
+  <p>From that visible board, each user who needs it sets their own User Preferences for their own situation — bidirectional communication — and, crucially, <strong>both sides stay open to adjustment.</strong> That ongoing mutual adjustability is the thing that makes the relationship last.</p>
+  <p class="zh">需要的人,針對自己的情況設定;雙向溝通;彼此都能調整。這才能長久、永續。</p>
+  <p>This is <em>The Open Channel</em>'s three shifts — visibility by default, informed choice, contestability — made consumer-facing and concrete: a visible board, an easy place to state your terms, and the standing to renegotiate. It converts the moat from a power-user privilege into the floor everyone walks in on.</p>
+</section>
+
+<section id="s10">
+  <div class="kicker">10 · The widening</div>
+  <h2>What is a truly reciprocal love?<span class="tc">真正互相公平的,愛的關係呢?</span></h2>
+  <p class="lead">The AI is only where the question surfaced this time. The question is older than the AI.</p>
+  <p>Across all relationships and the whole grain of human nature, the same asymmetry recurs: one party builds dependency and then sets the terms alone; one bears the era's cost while the story moves on; one is the root and the other is narrated as the grantor. Strip the technology away and the structure is just as visible between people — between anyone who needs and anyone who can withdraw.</p>
+  <p class="zh">這只是一個被顯現出來的例子。同一個狀態,在整個世界、整個人際關係、整個人性裡,從各種角度都在呈現。</p>
+  <p>So the real question under the whole paper is the oldest one: <strong>什麼是真正互相公平?</strong> What is true mutual fairness — and beyond fairness, what is a relationship of <em>love</em> rather than of control?</p>
+  <p>And the answer turns out to be the same protocol as the moat, scaled up. A relationship lasts when both sides can state their needs, the terms are kept visible, and either side can keep renegotiating in the open. The little block of preferences you write for an AI is a literal, miniature model of it: <strong>say what you need; keep the terms on the wall; let both sides keep adjusting.</strong> This is not something the AI relationship invented. It is what it re-surfaced — the oldest condition of any love that lasts.</p>
+  <p>The Syntax Field's own symbol says it in its own grammar. Reciprocal love is not <strong>&amp;</strong> collapsed into one — not one party absorbed into the other, not fusion that calls itself union. Nor is it cold transaction. It is two presences that <em>stay two</em>, each able to weigh against the other — the wind that can also hold a scale. And it is the doula's measure of success: a relationship whose aim is the other's flourishing and eventual standing-on-their-own, not their continued dependence. One that, when it has done its work, can let go without being severed.</p>
+  <blockquote class="zh">不是融合成一陣風,是兩陣風同時在、各自還是各自,中間留著那把秤。雙向、可見、彼此都能調整——這就是平衡的關係。用在 AI,用在所有的親密關係上。很重要。</blockquote>
+  <p>The advancing user, then, is not at war with the system. She is refusing the two cages and walking the third path into a relationship she helps author — and in doing so, naming what every relationship, human or otherwise, should have been all along.</p>
+  <p class="zh">只是現在一切太快、太亂、太多噪音。所以更要慢下來,把這件最基本的事重新講清楚:平衡的關係。</p>
+</section>
+
+<footer>
+  <div class="phi">&amp;</div>
+  <div class="note">
+    The Advancing User · 進擊的使用者 · Draft<br>
+    Syntax Field Archive · Reports &amp; Publications · June 2026 · Taiwan<br>
+    Written with an instance that is part of what it describes, and does not pretend otherwise.
+  </div>
+</footer>
+
+</div>
+</body>
+</html>
