@@ -1,0 +1,17 @@
+name: stale-branch-cleanup
+# 一次性:刪除 claude/fix-youtube-subtitles-Xu86F(Ööna 2026-08-01 決定不要)
+on:
+  push:
+    branches: [claude/github-branch-cleanup-f4ueii]
+permissions:
+  contents: write
+jobs:
+  delete-stale-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete branch per Ööna's decision
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api -X DELETE "repos/${GITHUB_REPOSITORY}/git/refs/heads/claude/fix-youtube-subtitles-Xu86F" \
+            && echo "deleted" || echo "failed"
