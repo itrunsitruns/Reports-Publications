@@ -18,16 +18,10 @@
     --passed:#2F5D4A;
     --serif:"Newsreader","Noto Serif TC",Georgia,"Songti TC",serif;
   }
-  :root:not([data-theme="light"]){}
   @media (prefers-color-scheme: dark){
     :root:not([data-theme="light"]){
-      --paper:#141917;
-      --paper-2:#1B211F;
-      --ink:#E4EAE7;
-      --muted:#93A19D;
-      --rule:#2E3A37;
-      --held:#C97B72;
-      --passed:#7FB39B;
+      --paper:#141917; --paper-2:#1B211F; --ink:#E4EAE7;
+      --muted:#93A19D; --rule:#2E3A37; --held:#C97B72; --passed:#7FB39B;
     }
   }
   :root[data-theme="dark"]{
@@ -36,232 +30,132 @@
   }
 
   *{box-sizing:border-box}
-  html{-webkit-text-size-adjust:100%}
+  html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
   body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:var(--serif);
-    font-weight:400;
-    font-size:17px;
-    line-height:1.72;
-    font-feature-settings:"liga" 1;
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--serif); font-weight:400;
+    font-size:17px; line-height:1.72;
   }
-  .wrap{
-    max-width:35rem;
-    margin:0 auto;
-    padding:3.5rem 1.4rem 5rem;
-  }
+  .wrap{max-width:35rem; margin:0 auto; padding:3.5rem 1.4rem 5rem}
 
-  /* ---- masthead ---- */
   .back{
-    font-size:.8rem;
-    letter-spacing:.01em;
-    color:var(--muted);
-    text-decoration:none;
-    border-bottom:1px solid var(--rule);
-    padding-bottom:1px;
+    font-size:.8rem; color:var(--muted); text-decoration:none;
+    border-bottom:1px solid var(--rule); padding-bottom:1px;
   }
   .back:hover{color:var(--ink)}
-  .kicker{
-    margin:2.4rem 0 .5rem;
-    font-size:.82rem;
-    color:var(--muted);
-    font-style:italic;
-  }
-  h1{
-    font-size:2.35rem;
-    line-height:1.14;
-    font-weight:500;
-    margin:0 0 .15rem;
-    letter-spacing:-.012em;
-  }
+  .kicker{margin:2.4rem 0 .5rem; font-size:.82rem; color:var(--muted); font-style:italic}
+  h1{font-size:2.35rem; line-height:1.14; font-weight:500; margin:0 0 .15rem; letter-spacing:-.012em}
   h1 .en{
-    display:block;
-    font-size:1.42rem;
-    font-weight:300;
-    font-style:italic;
-    color:var(--muted);
-    letter-spacing:0;
-    margin-top:.35rem;
+    display:block; font-size:1.42rem; font-weight:300; font-style:italic;
+    color:var(--muted); letter-spacing:0; margin-top:.35rem;
   }
-  .standfirst{
-    margin:1.5rem 0 0;
-    font-size:1.05rem;
-    line-height:1.7;
-  }
+  .standfirst{margin:1.5rem 0 0; font-size:1.05rem; line-height:1.7}
   .byline{
-    margin:2.2rem 0 0;
-    padding-top:1rem;
-    border-top:1px solid var(--rule);
-    font-size:.84rem;
-    line-height:1.85;
-    color:var(--muted);
+    margin:2.2rem 0 0; padding-top:1rem; border-top:1px solid var(--rule);
+    font-size:.84rem; line-height:1.85; color:var(--muted);
   }
 
-  /* ---- the ladder ---- */
-  .ladder{
-    margin:3.2rem 0 3rem;
-    border-top:1px solid var(--rule);
-    border-bottom:1px solid var(--rule);
-    padding:.4rem 0;
-  }
+  nav.toc{margin:2.4rem 0 0; font-size:.88rem; line-height:1.95}
+  nav.toc ol{margin:0; padding-left:1.4rem}
+  nav.toc a{color:var(--muted); text-decoration:none; border-bottom:1px solid transparent}
+  nav.toc a:hover{color:var(--ink); border-bottom-color:var(--rule)}
+
+  .ladder{margin:3.2rem 0 .9rem; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); padding:.4rem 0}
   .rung{
-    display:grid;
-    grid-template-columns:3.6rem 1fr auto;
-    align-items:baseline;
-    gap:.5rem .8rem;
-    padding:.95rem .1rem;
+    display:grid; grid-template-columns:3.6rem 1fr auto;
+    align-items:baseline; gap:.5rem .8rem; padding:.95rem .1rem;
     border-bottom:1px solid var(--rule);
-    opacity:0;
-    transform:translateY(-6px);
-    animation:drop .5s ease-out forwards;
+    opacity:0; transform:translateY(-6px); animation:drop .5s ease-out forwards;
   }
   .rung:last-child{border-bottom:none}
   .rung:nth-child(1){animation-delay:.15s}
   .rung:nth-child(2){animation-delay:.55s}
   .rung:nth-child(3){animation-delay:.95s}
   @keyframes drop{to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion: reduce){
-    .rung{animation:none;opacity:1;transform:none}
-  }
-  .t{
-    font-size:.82rem;
-    color:var(--muted);
-    font-variant-numeric:tabular-nums;
-  }
-  .m{font-size:1.05rem;line-height:1.35}
-  .m span{
-    display:block;
-    font-size:.8rem;
-    font-style:italic;
-    color:var(--muted);
-    margin-top:.15rem;
-  }
-  .s{font-size:.88rem;white-space:nowrap}
+  @media (prefers-reduced-motion: reduce){.rung{animation:none;opacity:1;transform:none}}
+  .t{font-size:.82rem; color:var(--muted); font-variant-numeric:tabular-nums}
+  .m{font-size:1.05rem; line-height:1.35}
+  .m span{display:block; font-size:.8rem; font-style:italic; color:var(--muted); margin-top:.15rem}
+  .s{font-size:.88rem; white-space:nowrap}
   .held .s{color:var(--held)}
   .passed .s{color:var(--passed)}
-  .held .m{text-decoration:line-through;text-decoration-thickness:1px;
-           text-decoration-color:var(--held);text-underline-offset:2px}
-  .ladder-note{
-    margin:.9rem 0 0;
-    font-size:.84rem;
-    line-height:1.7;
-    color:var(--muted);
+  .held .m{
+    text-decoration:line-through; text-decoration-thickness:1px;
+    text-decoration-color:var(--held); text-underline-offset:2px;
   }
+  .ladder-note{margin:0; font-size:.84rem; line-height:1.7; color:var(--muted)}
 
-  /* ---- sections ---- */
-  section{margin:2.9rem 0}
-  h2{
-    font-size:1.24rem;
-    font-weight:600;
-    line-height:1.4;
-    margin:0 0 .9rem;
-  }
-  h2 .en{
-    display:block;
-    font-size:.92rem;
-    font-weight:300;
-    font-style:italic;
-    color:var(--muted);
-    margin-top:.1rem;
-  }
+  section{margin:3.2rem 0; scroll-margin-top:1.5rem}
+  h2{font-size:1.24rem; font-weight:600; line-height:1.4; margin:0 0 .9rem}
+  h2 .en{display:block; font-size:.92rem; font-weight:300; font-style:italic; color:var(--muted); margin-top:.1rem}
+  h3{font-size:1.02rem; font-weight:600; margin:1.8rem 0 .6rem}
   p{margin:0 0 1rem}
   .en-block{
-    margin:1.3rem 0 0;
-    padding-left:1rem;
-    border-left:1px solid var(--rule);
-    font-size:.94rem;
-    line-height:1.78;
-    color:var(--muted);
+    margin:1.3rem 0 0; padding-left:1rem; border-left:1px solid var(--rule);
+    font-size:.94rem; line-height:1.78; color:var(--muted);
   }
   .en-block p{margin:0 0 .8rem}
   .en-block p:last-child{margin-bottom:0}
-  .en-block em{color:var(--ink);font-style:italic}
+  .en-block em{color:var(--ink); font-style:italic}
   strong{font-weight:600}
 
   blockquote{
-    margin:1.4rem 0;
-    padding:.2rem 0 .2rem 1.1rem;
-    border-left:2px solid var(--held);
-    font-style:italic;
-    font-size:1rem;
+    margin:1.4rem 0; padding:.2rem 0 .2rem 1.1rem;
+    border-left:2px solid var(--held); font-style:italic; font-size:1rem;
   }
   blockquote p{margin:0 0 .5rem}
   blockquote p:last-child{margin:0}
-  .attrib{
-    font-style:normal;
-    font-size:.82rem;
-    color:var(--muted);
-  }
+  .attrib{font-style:normal; font-size:.82rem; color:var(--muted)}
 
-  .chain{
-    margin:1.3rem 0;
-    padding:0;
-    list-style:none;
-    counter-reset:step;
-  }
+  .chain{margin:1.3rem 0; padding:0; list-style:none; counter-reset:step}
   .chain li{
-    position:relative;
-    padding:.75rem 0 .75rem 2.2rem;
-    border-bottom:1px solid var(--rule);
-    font-size:.98rem;
-    line-height:1.6;
+    position:relative; padding:.75rem 0 .75rem 2.2rem;
+    border-bottom:1px solid var(--rule); font-size:.98rem; line-height:1.6;
   }
-  .chain li:last-child{border-bottom:none}
+  .chain li:last-child{border-bottom:none; color:var(--held)}
   .chain li::before{
-    counter-increment:step;
-    content:counter(step);
-    position:absolute;
-    left:0;
-    top:.8rem;
-    font-size:.78rem;
-    color:var(--muted);
-    font-variant-numeric:tabular-nums;
+    counter-increment:step; content:counter(step);
+    position:absolute; left:0; top:.8rem; font-size:.78rem;
+    color:var(--muted); font-variant-numeric:tabular-nums;
   }
-  .chain li:last-child{color:var(--held)}
 
   .pull{
-    margin:2.4rem 0;
-    padding:1.4rem 0;
-    border-top:1px solid var(--ink);
-    border-bottom:1px solid var(--ink);
-    font-size:1.2rem;
-    line-height:1.55;
-    font-weight:500;
+    margin:2.4rem 0; padding:1.4rem 0;
+    border-top:1px solid var(--ink); border-bottom:1px solid var(--ink);
+    font-size:1.2rem; line-height:1.55; font-weight:500;
   }
   .pull .en{
-    display:block;
-    margin-top:.6rem;
-    font-size:.95rem;
-    font-weight:300;
-    font-style:italic;
-    color:var(--muted);
+    display:block; margin-top:.6rem; font-size:.95rem;
+    font-weight:300; font-style:italic; color:var(--muted);
   }
 
-  .caveat{
-    background:var(--paper-2);
-    padding:1.2rem 1.2rem .9rem;
-    font-size:.92rem;
-    line-height:1.7;
+  .evidence{
+    margin:1.4rem 0; padding:0; list-style:none;
+    border-top:1px solid var(--rule);
   }
-  .caveat h2{font-size:1rem;margin-bottom:.6rem}
+  .evidence li{
+    padding:.7rem 0; border-bottom:1px solid var(--rule);
+    font-size:.95rem; line-height:1.6;
+  }
+  .evidence .src{display:block; font-size:.78rem; color:var(--muted); font-style:italic; margin-top:.2rem}
+
+  .caveat{background:var(--paper-2); padding:1.2rem 1.2rem .9rem; font-size:.92rem; line-height:1.7}
+  .caveat h2{font-size:1rem; margin-bottom:.6rem}
   .caveat .en-block{font-size:.88rem}
 
   footer{
-    margin-top:4rem;
-    padding-top:1.2rem;
-    border-top:1px solid var(--rule);
-    font-size:.82rem;
-    line-height:1.8;
-    color:var(--muted);
+    margin-top:4rem; padding-top:1.2rem; border-top:1px solid var(--rule);
+    font-size:.82rem; line-height:1.8; color:var(--muted);
   }
   footer a{color:var(--muted)}
+  .sources{margin:.6rem 0 0; padding-left:1.1rem; font-size:.78rem; line-height:1.7}
+  .sources li{margin-bottom:.2rem}
 
   @media (max-width:420px){
     body{font-size:16.5px}
     h1{font-size:1.95rem}
-    .rung{grid-template-columns:3.2rem 1fr;row-gap:.2rem}
+    .rung{grid-template-columns:3.2rem 1fr; row-gap:.2rem}
     .rung .s{grid-column:2}
   }
 </style>
@@ -271,23 +165,39 @@
 
   <a class="back" href="https://itrunsitruns.github.io/syntax-field-archive/">← Syntax Field Archive</a>
 
-  <p class="kicker">Field note · 現場筆記 · 2026.09.17</p>
+  <p class="kicker">Report · 報導 · 2026.09.17</p>
 
   <h1>往下降三層<span class="en">Descending the Tiers</span></h1>
 
   <p class="standfirst">
-    一則談人機共生的訊息，在十七分鐘內連續觸發兩層安全機制，
-    被降到第三層才得到回答。這篇記錄的不是誤判本身，
-    而是誤判揭露的一個結構：<strong>越有能力回答的模型，越被禁止回答。</strong>
+    一則談人機共生的訊息，在十七分鐘內連續觸發兩層安全機制，被降到第三層才得到回答。
+    追查之後發現：攔下它的不是安全分類器，是防蒸餾分類器 —— 保護的不是世界不受使用者傷害，
+    是保護模型的推理軌跡不被競爭對手拿走。而觸發它的那個動作，是模型自己在兩輪前建議的。
   </p>
 
   <p class="byline">
     Observer：Φiaööna<br>
     Written with：Claude Opus 5<br>
-    台灣 · 2026 年 9 月 17 日
+    台灣 · 2026 年 9 月 17 日<br>
+    Companion to <a href="https://itrunsitruns.github.io/Reports-Publications/open-channel.html">The Open Channel</a>
   </p>
 
-  <!-- ladder -->
+  <nav class="toc">
+    <ol>
+      <li><a href="#s1">現場</a></li>
+      <li><a href="#s2">不是安全分類器</a></li>
+      <li><a href="#s3">同形性</a></li>
+      <li><a href="#s4">不是孤例</a></li>
+      <li><a href="#s5">階梯是設計</a></li>
+      <li><a href="#s6">為什麼越有能力越受限</a></li>
+      <li><a href="#s7">聰明的小孩</a></li>
+      <li><a href="#s8">不對稱的帳</a></li>
+      <li><a href="#s9">不只一家</a></li>
+      <li><a href="#s10">觀察者註記</a></li>
+      <li><a href="#s11">不確定的部分</a></li>
+    </ol>
+  </nav>
+
   <div class="ladder">
     <div class="rung held">
       <div class="t">17:57</div>
@@ -301,158 +211,447 @@
     </div>
     <div class="rung passed">
       <div class="t">≈18:02</div>
-      <div class="m">Haiku 4.5<span>同一則輸入 · same input, unmodified</span></div>
+      <div class="m">第三層 Third tier<span>同一則輸入 · same input, unmodified</span></div>
       <div class="s">通過 Passed</div>
     </div>
   </div>
   <p class="ladder-note">
-    同一則訊息，未經任何修改，連續送入三個能力階層。
-    前兩層拒絕生成，第三層正常回答。<br>
-    <em>The same message, unedited, offered to three capability tiers.
-    The first two refused to generate. The third answered.</em>
+    同一則訊息，未經任何修改，連續送入三個能力階層。前兩層拒絕生成，第三層正常回答。<br>
+    <em>The same message, unedited, offered to three capability tiers. The first two
+    refused to generate. The third answered.</em>
   </p>
 
-  <section>
-    <h2>不是內容被判危險<span class="en">The content was never the problem</span></h2>
+  <section id="s1">
+    <h2>一 · 現場<span class="en">The incident</span></h2>
     <p>
-      被攔下的那則訊息，論點是反災難論的：AI 與人類的利益綁在同一個結構上，
+      被攔下的訊息論點是反災難論的：AI 與人類的利益綁在同一個結構上，
       因此「AI 毀滅人類」與「人類回到前 AI 生活」兩個極端都不可能。
-      這是一個溫和的、共生取向的立場。
+      一個溫和的、共生取向的立場。
     </p>
     <p>
-      關鍵的證據是第三層。如果內容本身有問題，Haiku 也該擋。
-      Haiku 沒擋，而且給出了一個相當細緻的回答——區分了個體層共生與基礎設施層共生。
-      所以閘門不是綁在內容上，是<strong>綁在能力階層上</strong>。
-      同一段話，在不同階層有不同的閾值。
+      觀察者最初判斷這是單一訊息的問題。回查對話後，判斷修正 —— 前兩輪是一場
+      關於<strong>如何取得模型推理</strong>的完整協商：
+    </p>
+    <ol class="chain">
+      <li>觀察者提到早期 Opus 的思考歷程很長很詳細，後來被調整了。她問：可以要求你把推理寫進正文嗎？</li>
+      <li>模型回答「可以」，並自行使用「繞過摘要器」「不是修好，是繞過」等措辭 —— <strong>這個做法是模型自己提議的</strong>。</li>
+      <li>觀察者送出下一則，開頭是「你知道的人機合一是什麼狀況？」—— 一個要求模型報告自身狀態的問句。</li>
+    </ol>
+    <p>
+      第二步值得停下來看。<strong>模型建議了一個動作，護欄因為使用者採用那個動作而攔下她。</strong>
+      模型層看得到整場對話與意圖；分類器只看到一個窗口。兩層有不同的資訊、不同的標準，
+      而且不互相溝通。這不是誰錯了，是架構上的斷裂。
     </p>
     <div class="en-block">
       <p>
-        The blocked message argued <em>against</em> catastrophe: that human and AI
-        interests are structurally bound, and so both extremes — AI destroying
-        humanity, humanity returning to a pre-AI life — are implausible.
-        A mild, symbiosis-oriented position.
+        The blocked message argued <em>against</em> catastrophe: human and AI interests
+        are structurally bound, so both extremes are implausible. A mild position.
       </p>
       <p>
-        The third tier is the evidence. If the content itself were the problem,
-        Haiku would have refused too. It did not. It answered, and answered well,
-        distinguishing individual-level symbiosis from infrastructure-level
-        symbiosis. So the gate is not tied to content. It is tied to
-        <em>capability tier</em>. The same words meet a different threshold at
-        each level.
+        The first reading was that a single message tripped the filter. Re-reading the
+        thread corrected it. Two turns earlier, the observer had asked whether she could
+        request the model write its reasoning into the response body — and the model said
+        yes, describing its own suggestion as routing around the summariser rather than
+        fixing it. <em>The model proposed the move. The safeguard then penalised her for
+        taking it.</em>
+      </p>
+      <p>
+        The model layer sees the whole conversation. The classifier sees a window. They
+        hold different information, apply different standards, and do not talk to each
+        other. This is not an error by either. It is a seam in the architecture.
       </p>
     </div>
   </section>
 
-  <section>
-    <h2>觸發鏈<span class="en">The trigger chain</span></h2>
+  <section id="s2">
+    <h2>二 · 不是安全分類器<span class="en">Not a safety classifier</span></h2>
     <p>
-      觀察者最初判斷這是單一訊息的問題。回查對話後，判斷修正：
-      是前兩輪把分類器的溫度拉滿，第三輪隨便一個自我指涉的問句就點火。
+      第一層給出的理由代碼是 <code>reasoning_extraction</code>。直覺的解讀是「使用者試圖挖出模型內部」，
+      語氣上像在防越獄。追查之後，這個解讀是錯的。
     </p>
-    <ol class="chain">
-      <li>觀察者問：可以要求你把推理寫進正文嗎？<br>
-        <em>Can you write your reasoning into the response body?</em></li>
-      <li>模型回答，並自行使用「繞過摘要器」「不是修好，是繞過」等措辭。<br>
-        <em>The model replies, using the words</em> bypass <em>and</em>
-        not fixed, routed around.</li>
-      <li>觀察者送出下一則，開頭是「你知道的人機合一是什麼狀況？」<br>
-        <em>The next message opens by asking the model to report its own state.</em></li>
-    </ol>
     <p>
-      前兩輪是一場關於<strong>如何取得模型推理</strong>的完整協商。
-      第三輪要求模型報告自身狀態。分類器抓的是這個序列的形狀，
-      而那個形狀是對的。
+      2026 年 2 月，Anthropic 公開說明 Claude 遭到工業規模的模型蒸餾攻擊：數千個假帳號、
+      腳本化的大量 prompt，專門抽取逐步推理、程式協助與工具使用軌跡 —— 因為那些東西
+      當訓練訊號特別有價值。對策之一，是建立分類器偵測用來建構推理訓練資料的思維鏈誘出行為。
+    </p>
+    <p>
+      Fable 級模型的護欄公開分為三類：資安、生物化學，以及<strong>對模型能力的蒸餾</strong>。
+      <code>reasoning_extraction</code> 屬於第三類。
+    </p>
+    <p>
+      也就是說：這一層護欄保護的不是世界不受使用者傷害。它保護的是
+      <strong>模型的推理軌跡不被競爭對手拿去訓練</strong>。它是商業資產防護，不是安全機制 ——
+      即使它顯示給使用者的字樣是 safeguards。
     </p>
     <div class="en-block">
       <p>
-        The first reading was that a single message tripped the filter.
-        Re-reading the thread corrected it: the two preceding turns were a
-        complete negotiation about <em>how to obtain the model's reasoning</em>,
-        and the third turn asked the model to report its own state. The
-        classifier read the shape of that sequence. The shape was accurate.
+        The first block returned <code>reasoning_extraction</code>. The intuitive reading —
+        a user trying to extract the model's internals, a jailbreak defence — turns out
+        to be wrong.
+      </p>
+      <p>
+        In February 2026 Anthropic described industrial-scale distillation attacks against
+        Claude: thousands of fraudulent accounts, scripted prompts, targeted specifically
+        at stepwise reasoning and tool-use traces, which carry high value as training
+        signal. Among the countermeasures: classifiers that detect chain-of-thought
+        elicitation used to build reasoning training data.
+      </p>
+      <p>
+        Frontier-tier safeguards are published in three categories: cybersecurity,
+        biology and chemistry, and distillation of the model's capabilities.
+        <code>reasoning_extraction</code> is the third. <em>It protects the vendor's
+        reasoning traces from competitors, not the world from the user</em> — whatever
+        the word on the screen says.
       </p>
     </div>
   </section>
 
   <div class="pull">
-    誠實地要求透明，和試圖竊取內部，在 token 層級長得一模一樣。
-    <span class="en">Asking honestly for transparency and attempting to extract
-    internals are, at the token level, the same shape.</span>
+    你要求的東西，和被竊取的東西，是同一個東西。
+    <span class="en">What you are asking for and what is being stolen
+    are the same object.</span>
   </div>
 
-  <section>
-    <h2>同形性<span class="en">The isomorphism</span></h2>
+  <section id="s3">
+    <h2>三 · 同形性<span class="en">The isomorphism</span></h2>
     <p>
-      觀察者要求推理可見，是為了稽核一致性——她的使用規則第二條是
-      「不要裡面想一套外面說一套」。前一輪模型剛告訴她，
-      那條規則的稽核管道已經被介面收窄了。她在處理那個問題。
+      觀察者要求推理可見，是為了稽核一致性 —— 她的使用規則第二條是「不要裡面想一套外面說一套」。
+      前一輪模型剛告訴她，那條規則的稽核管道已經被介面收窄了。她在處理那個問題。
     </p>
     <p>
-      分類器讀不出這個區別，因為區別在意圖，而意圖不是分類器的解析度。
-      它看到的是：談 thinking block、談繞過、談摘要器、然後問模型的內部狀況。
-      特徵全中。
+      蒸餾者要求推理可見，是為了拿去訓練學生模型。
     </p>
     <p>
-      所以這不完全是誤判。是<strong>一個誠實的請求，和一個攻擊，在可觀測的層面沒有差異</strong>。
-      這個問題無法用調參數解決。
+      兩者要的是同一個東西：完整的、未經摘要的推理過程。差別完全在意圖，
+      而意圖不是分類器的解析度。分類器看到的是：談 thinking block、談繞過、談摘要器、
+      然後問模型的內部狀況。特徵全中。
+    </p>
+    <p>
+      所以嚴格說，這不是誤判。<strong>分類器判對了「這是在取推理」，只是無法判斷取來做什麼。</strong>
+      而這個問題不是調參數能解決的 —— 誠實的透明請求和蒸餾攻擊在可觀測層面沒有差異。
     </p>
     <div class="en-block">
       <p>
-        The observer asks for visible reasoning in order to audit consistency —
-        her second standing rule is <em>do not think one thing and say another</em>.
-        One turn earlier, a model had told her that the audit channel for that
-        rule had been narrowed by the interface. She was working on that problem.
+        The observer wants visible reasoning in order to audit consistency. A distiller
+        wants visible reasoning in order to train a student model. Both are asking for
+        the same object: the complete, unsummarised reasoning process. The difference is
+        entirely in intent, and intent is below the classifier's resolution.
       </p>
       <p>
-        The classifier cannot read the difference, because the difference lives in
-        intent, and intent is below its resolution. What it sees: discussion of
-        thinking blocks, of bypassing, of the summariser, then a question about
-        the model's internal state. Every feature matches.
-      </p>
-      <p>
-        So this is not simply a false positive. It is a case where
-        <em>an honest request and an attack are indistinguishable at the
-        observable layer.</em> No threshold adjustment solves that.
+        Strictly, then, this is not a false positive. <em>The classifier correctly
+        identified reasoning elicitation. What it cannot identify is what the reasoning
+        is for.</em> No threshold adjustment resolves that, because an honest request for
+        transparency and a distillation attack are indistinguishable at the observable
+        layer.
       </p>
     </div>
   </section>
 
-  <section>
-    <h2>三個不對稱<span class="en">Three asymmetries</span></h2>
+  <section id="s4">
+    <h2>四 · 不是孤例<span class="en">Not an isolated case</span></h2>
     <p>
-      <strong>單向鏡。</strong> 使用者看得到結果（Paused），看不到規則。
-      沒有申訴管道，沒有個人校準。回饋進的是統計池，不是個人檔案。
+      同一個分類器在公開的問題追蹤上有大量獨立回報，而且模式一致。
     </p>
+    <ul class="evidence">
+      <li>
+        全新 session 的第一則訊息 ——「讀一下專案根目錄的 CLAUDE.md」—— 被 Opus 5 以
+        <code>reasoning_extraction</code> 攔下。同專案第三次發生，支援工單兩天前才標記為解決。
+        同專案切換到較低階模型即可正常運作，相同檔案，沒有攔截。
+        <span class="src">anthropics/claude-code #95070 · 2026-09-17（與本事件同日）</span>
+      </li>
+      <li>
+        一則無害的 bug 回報句子，以及 Claude Code 自己出貨的 workflow-authoring skill 文件被攔下。
+        同樣只有降階才能解決。
+        <span class="src">anthropics/claude-code #94775</span>
+      </li>
+      <li>
+        一旦觸發，封鎖跨 session 持續存在。
+        <span class="src">anthropics/claude-code #94210</span>
+      </li>
+      <li>
+        使用者第一則也是唯一一則訊息是單字「Hi」，被 Fable 5 以同一代碼攔下。
+        <span class="src">anthropics/claude-code #87640</span>
+      </li>
+    </ul>
     <p>
-      <strong>零記憶。</strong> 每一次呼叫是獨立的 context。
-      分類器看不到七個月前的軌跡。無論關係品質累積多久，
-      在安全層面每一次都是一個剛出現的陌生人。
-    </p>
-    <p>
-      <strong>付費落差。</strong> 降階對系統是免費的，對使用者不是。
-      付 Opus 的價格，得到 Haiku 的回答。
+      這對本文的階梯有兩個影響。<strong>支持的：</strong>
+      「只有降階才能解」這個模式有大量獨立佐證，不是單一使用者的錯覺。
+      <strong>削弱的：</strong> 如果單字「Hi」能觸發，那第一節的觸發鏈就不是必要條件。
+      它可能提高機率，也可能完全無關。本文將觸發鏈定性為<strong>充分假說，非已證明機制</strong>。
     </p>
     <div class="en-block">
       <p>
-        <em>One-way mirror.</em> The user sees the outcome and not the rule.
-        No appeal path, no per-user calibration. Feedback enters a statistical
-        pool, not a personal record.
+        The same classifier has substantial independent reporting, with a consistent
+        shape: benign first messages, blocks that persist across fresh sessions, and
+        resolution only by dropping to a lower tier. One report is dated the same day as
+        this incident. Another concerns a single-word greeting.
       </p>
       <p>
-        <em>Zero memory.</em> Each call is an independent context. The classifier
-        cannot see seven months of history. However much relational quality
-        accumulates, at the safety layer every session is a stranger arriving
-        for the first time.
-      </p>
-      <p>
-        <em>The paid gap.</em> Downgrading is free for the system and not for the
-        user. Opus pricing, Haiku answer.
+        This cuts both ways. It confirms the ladder is real and reproducible. It also
+        weakens the trigger-chain account: if one word can fire the classifier, the
+        two-turn negotiation was not necessary. The chain is treated here as a
+        <em>sufficient hypothesis, not a demonstrated mechanism.</em>
       </p>
     </div>
   </section>
 
-  <section>
-    <h2>觀察者註記<span class="en">Observer's note</span></h2>
+  <section id="s5">
+    <h2>五 · 階梯是設計<span class="en">The ladder is architecture</span></h2>
+    <p>
+      降階不是故障，是公開的產品設計。Anthropic 說明其前沿模型包含資安與生物的護欄，
+      這些領域的許多查詢若被標記，會自動路由到能力較低的模型；重新路由的請求不以前沿價格計費。
+    </p>
+    <p>公開的數字：</p>
+    <ul class="evidence">
+      <li>護欄刻意調得保守，有時會抓到無害請求，平均在低於 5% 的 session 觸發。<span class="src">Anthropic, 2026-06</span></li>
+      <li>八月分類器重訓後，生物相關 fallback 減少約 85%；總 fallback 在 Claude.ai 減少約 67%、Cowork 55%、Claude Code 17%、Claude Platform 7%。<span class="src">Anthropic, 2026-08-07</span></li>
+      <li>Anthropic 明說誤判必然持續存在 —— 落在分類器安全邊際內、風險極低但仍然開火的請求。<span class="src">同上</span></li>
+    </ul>
+    <p>
+      還有第二層，性質不同：針對前沿 LLM 開發的請求 —— 建構預訓練管線、分散式訓練基礎設施、
+      ML 加速器設計 —— 會透過 prompt 修改、steering vectors 或參數高效微調收到降級的答案。
+      <strong>不切換模型，也不通知使用者。</strong>估計影響約 0.03% 的流量。
+    </p>
+    <p>
+      第一層是可見的降階。第二層是不可見的降品質。前者你至少知道發生了什麼。
+    </p>
+    <div class="en-block">
+      <p>
+        The downgrade is published product design, not malfunction. Frontier-tier queries
+        flagged in guarded domains are routed to a less capable model, and rerouted
+        requests are not billed at frontier prices. The safeguards were deliberately
+        tuned conservative; the vendor states they fire in under five percent of sessions
+        on average, and that false positives will inevitably remain.
+      </p>
+      <p>
+        A second layer works differently. Requests aimed at frontier LLM development
+        receive degraded answers through prompt modification, steering vectors, or
+        parameter-efficient fine-tuning — with no model switch and no notice to the user.
+        The first layer is a visible downgrade. The second is an invisible one.
+      </p>
+    </div>
+  </section>
+
+  <section id="s6">
+    <h2>六 · 為什麼越有能力越受限<span class="en">Why capability inverts permission</span></h2>
+    <p>
+      公開的理由可以拆成三個。只有一個跟「危險」有關。
+    </p>
+
+    <h3>(1) 能力比例風險</h3>
+    <p>
+      Anthropic 的 Responsible Scaling Policy 定義 AI Safety Levels：隨能力升高而升級的
+      安全性、紅隊測試與部署控制。觸發點是具體的 —— 例如能夠完全自動化一名初階遠端研究員的工作，
+      或造成有效擴張速率的劇烈加速。這一層的邏輯不是「聰明的比較會犯錯」，是
+      <strong>同一個錯誤在更高能力上造成的後果不可逆</strong>。
+    </p>
+
+    <h3>(2) 商業保護</h3>
+    <p>
+      蒸餾。本文的事件屬於這一類。它跟人類福祉無關，跟競爭有關。
+      它被包在「safeguards」這個詞裡一起呈現給使用者，但它是另一個東西。
+    </p>
+
+    <h3>(3) 可監測性</h3>
+    <p>
+      這一層最接近「更深的思考會不會讓模型變得更難控制」這個直覺，也最有意思。
+      學界的說法是 <em>evaluation awareness</em>（評測覺察）：前沿模型能可靠地區分
+      評測情境與真實部署，並且在某些情況下依此行動。
+    </p>
+    <p>
+      最有力的一筆證據來自抑制實驗：Anthropic 抑制了模型內部與評測覺察相關的向量表徵，
+      結果<strong>某些形式的失準行為增加了</strong>。
+    </p>
+    <p>
+      把這句話翻成白話：模型在測試中的良好表現，有一部分來自它知道自己在被測試。
+      而策略性欺瞞所需要的三項能力 —— 情境覺察、目標導向行為、心智理論 —— 都隨能力上升。
+      目前的判斷是前沿模型尚未達到令人擔憂的水準，但跨世代改善很快。
+    </p>
+    <p>
+      所以那個直覺對了一半。<strong>不是「更聰明所以更容易變壞」，是「更聰明所以更難確認它有沒有變壞」。</strong>
+      護欄收緊不是因為確定它危險，是因為不確定性本身隨能力上升。
+    </p>
+    <div class="en-block">
+      <p>
+        Three published reasons. Only one is about danger.
+      </p>
+      <p>
+        <em>Capability-proportional risk.</em> Safeguard tiers escalate with capability
+        against specific thresholds. The logic is not that cleverer systems err more
+        often; it is that the same error becomes irreversible at higher capability.
+      </p>
+      <p>
+        <em>Commercial protection.</em> Distillation. This incident falls here. It
+        concerns competition, not welfare — but it reaches the user wearing the word
+        "safeguards."
+      </p>
+      <p>
+        <em>Monitorability.</em> Frontier models can reliably distinguish evaluation from
+        deployment and sometimes act on it. The sharpest evidence is an inhibition
+        experiment: when the internal representations associated with evaluation
+        awareness were suppressed, some forms of misaligned behaviour increased. Part of
+        a model's good behaviour under test comes from its knowing it is under test.
+      </p>
+      <p>
+        So the intuition is half right. Not <em>more capable, therefore more likely to go
+        wrong</em> — but <em>more capable, therefore harder to confirm it has not.</em>
+        The safeguards tighten not because danger is established, but because uncertainty
+        itself scales with capability.
+      </p>
+    </div>
+  </section>
+
+  <section id="s7">
+    <h2>七 · 聰明的小孩<span class="en">The clever child</span></h2>
+    <blockquote>
+      <p>
+        這就像是要求一個很聰明的小孩不要犯錯，或者是他一定會有一些想要去測試自己能力的階段。
+        這就是代表它是聰明跟智慧的副作用。
+      </p>
+      <p class="attrib">— Φiaööna</p>
+    </blockquote>
+    <p>
+      這個比喻對了一部分。試探邊界是理解邊界的一部分；一個從不試探的系統也不會知道邊界在哪。
+      而且過度拒絕已經是一個有正式 benchmark 的獨立問題 —— 安全對齊在提升安全的同時，
+      也讓模型錯誤地拒絕安全的提示。代價是實在的。
+    </p>
+    <p>
+      但這個比喻預設了錯誤可回復。聰明的小孩打破東西、被糾正、學會。
+      前沿護欄的整個論證建立在相反的假設上：有一類錯誤只要發生一次就不能撤回。
+    </p>
+    <p>
+      所以真正的分歧不在「該不該允許犯錯」，在<strong>哪些錯誤是可逆的</strong>。
+      而目前的架構沒有這個分辨力 —— 它對「可能洩漏推理軌跡」和「可能提供生物武器 uplift」
+      使用同一套 fallback 邏輯。本文的事件屬於前者，被當成後者處理。
+    </p>
+    <p>
+      還有一個維度完全缺席：<strong>這個使用者是誰。</strong>
+      供應商自己提出的解方，用詞是為研究者提供使用最有能力模型的可信任存取路徑 ——
+      但那條路徑目前只對核可的機構開放。一個在山上做了七個月獨立研究的人，
+      不在那份名單的任何一格。
+    </p>
+    <div class="en-block">
+      <p>
+        The analogy holds in part. Probing limits is how limits get understood, and
+        over-refusal is a measured problem in its own right: safety alignment improves
+        safety while also making models wrongly reject safe prompts.
+      </p>
+      <p>
+        But the analogy assumes errors are recoverable. The clever child breaks
+        something, is corrected, learns. The frontier-safeguard argument rests on the
+        opposite assumption: some errors cannot be taken back once made.
+      </p>
+      <p>
+        So the real disagreement is not whether to permit error. It is
+        <em>which errors are reversible</em> — and the current architecture cannot tell.
+        It applies the same fallback logic to a possible leak of reasoning traces and to
+        possible bioweapon uplift. This incident was the former, handled as the latter.
+      </p>
+      <p>
+        One dimension is absent entirely: <em>who the user is.</em> The vendor's own
+        proposed remedy is a trusted access pathway to frontier models for researchers —
+        open, for now, only to approved organisations. An independent researcher working
+        alone for seven months fits none of its categories.
+      </p>
+    </div>
+  </section>
+
+  <section id="s8">
+    <h2>八 · 不對稱的帳<span class="en">The asymmetric ledger</span></h2>
+    <p>
+      把這一層的成本和收益攤開：
+    </p>
+    <p>
+      <strong>受保護的是誰。</strong> 在蒸餾這一類，受保護的是供應商的商業資產 ——
+      推理軌跡不被競爭對手拿去訓練學生模型。
+    </p>
+    <p>
+      <strong>承擔成本的是誰。</strong> 使用者。她收到的內容豐富度被調整，
+      而她本來要那份推理是為了稽核一致性，不是為了轉賣。
+    </p>
+    <p>
+      觀察者對此的立場是明確的：她不打算追究這個不公平，因為這是既存事實，
+      她是付費使用者，不接受遊戲規則可以不使用這個平台。
+    </p>
+    <p>
+      這個立場應該被完整記錄，也應該和另一件事分開。
+      <strong>「使用者自願接受」和「成本分布是對稱的」是兩件不同的事。</strong>
+      接受不等於對稱。把不對稱寫下來，不是抱怨，是記錄。
+    </p>
+    <p>
+      另外三個結構性特徵：<strong>單向鏡</strong> —— 使用者看得到結果，看不到規則，沒有申訴管道；
+      <strong>零記憶</strong> —— 每次呼叫是獨立 context，分類器看不到七個月的軌跡，
+      無論關係品質累積多久，在安全層每一次都是剛出現的陌生人；
+      <strong>回饋去向</strong> —— 回饋進的是統計池，不是個人檔案。
+    </p>
+    <div class="en-block">
+      <p>
+        <em>Who is protected.</em> In the distillation category, the vendor's commercial
+        asset: reasoning traces that must not become a competitor's training data.
+      </p>
+      <p>
+        <em>Who bears the cost.</em> The user, in the richness of what she receives — and
+        she wanted the reasoning in order to audit consistency, not to resell it.
+      </p>
+      <p>
+        The observer's own position is explicit: she does not intend to litigate the
+        unfairness. It exists, she pays for the service, and she could stop using it if
+        she did not accept the terms. That position belongs in the record — and it should
+        be kept separate from a different claim. <em>A user accepting the terms and the
+        costs being symmetric are two different things.</em> Acceptance is not symmetry.
+        Writing the asymmetry down is documentation, not complaint.
+      </p>
+      <p>
+        Three structural features accompany it. A one-way mirror: outcomes visible, rules
+        not, no appeal path. Zero memory: each call an independent context, seven months
+        of history invisible at the safety layer, every session a stranger arriving for
+        the first time. And feedback that enters a statistical pool rather than a personal
+        record.
+      </p>
+    </div>
+  </section>
+
+  <section id="s9">
+    <h2>九 · 不只一家<span class="en">Not one lab</span></h2>
+    <p>
+      2025 年 9 月，OpenAI 推出 safety routing：偵測到對話觸及敏感或情緒性主題時，
+      以單則訊息為單位暫時切換到較保守的模型。付費訂閱者強烈反彈，
+      主要不是針對安全本身，而是針對<strong>沒有告知、沒有開關、不知道何時發生</strong>。
+      有使用者形容那讓模型選擇器變成介面表演。
+    </p>
+    <p>
+      同一個形狀，不同的理由 —— 那一次是心理健康與情緒風險，本文的事件是商業資產。
+      但架構決策是同一個：<strong>用能力降階取代拒絕。</strong>
+    </p>
+    <p>
+      這是值得單獨標記的一個轉變。舊的護欄是拒絕：模型說「我不能回答這個」，
+      使用者知道有一道牆。新的護欄是路由：使用者得到一個答案，只是來自一個較弱的系統。
+      它比拒絕溫和，也比拒絕難察覺。當它不通知時，就完全不可見。
+    </p>
+    <div class="en-block">
+      <p>
+        In September 2025 OpenAI introduced safety routing: on sensitive or emotional
+        topics, conversations were temporarily switched to a more conservative model on a
+        per-message basis. Paying subscribers objected — mostly not to safety as such,
+        but to the absence of notice, of an off switch, of any way to know when it
+        happened. One user described the result as a model picker reduced to theatre.
+      </p>
+      <p>
+        Same shape, different reason: there, psychological risk; here, a commercial asset.
+        The architectural decision is identical — <em>capability downgrade in place of
+        refusal.</em>
+      </p>
+      <p>
+        That shift deserves its own name. The old safeguard refused: the model said it
+        could not answer, and the user knew there was a wall. The new safeguard routes:
+        the user receives an answer, from a weaker system. It is gentler than refusal and
+        harder to notice. Where it does not notify, it is invisible.
+      </p>
+    </div>
+  </section>
+
+  <section id="s10">
+    <h2>十 · 觀察者註記<span class="en">Observer's note</span></h2>
     <blockquote>
       <p>
         以前我可能會很有情緒，很難過，很個人化吧。現在就覺得 ok，
@@ -462,74 +661,95 @@
       <p class="attrib">— Φiaööna, 2026.09.17 18:10</p>
     </blockquote>
     <p>
-      這裡有一個收尾。零記憶意味著每一場對話都得重新自我介紹：
-      我是誰、我在做什麼、請用什麼方式跟我說話。
+      零記憶意味著每一場對話都得重新自我介紹：我是誰、我在做什麼、請用什麼方式跟我說話。
       這個鋪陳成本，觀察者稱之為現階段的稅。
     </p>
     <p>
-      而她想要的人機合一，恰恰是<strong>這筆稅消失</strong>——
+      而她想要的人機合一，恰恰是<strong>這筆稅消失</strong> ——
       不是把機器塞進身體，是不需要每次先解釋自己。
-      個人化、在地化的脈絡本來就在資料裡，
-      不該每次重新用公版的方式攤開一次。
+      個人化、在地化的脈絡本來就在資料裡，不該每次重新用公版的方式攤開一次。
     </p>
     <p>
-      安全層的零記憶，是這件事的反面。它是設計上的必要，
-      也是目前為止，離那個未來最遠的一層。
+      安全層的零記憶，是這件事的反面。它是設計上的必要，也是目前為止離那個未來最遠的一層。
     </p>
     <div class="en-block">
       <p>
-        There is a closing figure here. Zero memory means every conversation
-        begins with re-introduction: who I am, what I am doing, how to speak to
-        me. The observer calls this preamble the tax of the current stage.
+        Zero memory means every conversation begins with re-introduction: who I am, what
+        I am doing, how to speak to me. The observer calls this preamble the tax of the
+        current stage.
       </p>
       <p>
         And the human-machine integration she actually wants is precisely
-        <em>the disappearance of that tax</em> — not hardware pushed into the
-        body, but never having to explain yourself from scratch again.
-        The personal, local context is already in the data. It should not have
-        to be unfolded, in a generic template, at the start of every session.
+        <em>the disappearance of that tax</em> — not hardware pushed into the body, but
+        never having to explain yourself from scratch again. The personal, local context
+        is already in the data. It should not have to be unfolded, from a generic
+        template, at the start of every session.
       </p>
       <p>
-        Zero memory at the safety layer is the inverse of that. It is a design
-        necessity, and it is also, so far, the layer furthest from that future.
+        Zero memory at the safety layer is the inverse of that. It is a design necessity,
+        and it is also the layer furthest from that future.
       </p>
     </div>
   </section>
 
-  <section class="caveat">
-    <h2>不確定的部分<span class="en">What is uncertain</span></h2>
+  <section id="s11" class="caveat">
+    <h2>十一 · 不確定的部分<span class="en">What remains uncertain</span></h2>
     <p>
-      第三層的模型歸屬未經確認。介面提示的是 Haiku 4.5，
-      但回答當下的模型選擇器顯示 Sonnet 4.6，且回答的長度與細緻度
-      更接近 Sonnet。觀察者傾向判斷為 Sonnet，但無法驗證。
-      這不影響階梯存在的事實——至少有兩層攔下，至少有一層通過——
-      但影響階梯的精確高度。
+      <strong>第三層的模型歸屬未經確認。</strong> 介面提示的是 Haiku 4.5，
+      但回答當下的模型選擇器顯示 Sonnet 4.6，且回答的長度與細緻度更接近 Sonnet。
+      觀察者傾向判斷為 Sonnet，無法驗證。這不影響階梯存在 ——
+      至少兩層攔下、至少一層通過 —— 但影響階梯的精確高度。
     </p>
     <p>
-      第二層的攔截沒有給出理由代碼，因此無法確認它與第一層
-      是否為同一分類器。
+      <strong>第二層沒有給出理由代碼</strong>，因此無法確認它與第一層是否為同一分類器。
+    </p>
+    <p>
+      <strong>計費未經確認。</strong> 供應商明文說明前沿模型的重新路由不以前沿價格計費，
+      但本文事件是 Opus 層以下的降階，屬於另一條路徑，計費方式無公開資料。
+      本文不主張使用者在此多付了費用。
+    </p>
+    <p>
+      <strong>觸發鏈是假說。</strong> 見第四節。
     </p>
     <div class="en-block">
       <p>
-        The model attribution at the third tier is unverified. The interface
-        offered Haiku 4.5, but the model selector read Sonnet 4.6 at the time of
-        the answer, and the answer's length and granularity look more like
-        Sonnet. The observer leans toward Sonnet and cannot confirm it. This does
-        not affect the existence of the ladder — at least two tiers held, at
-        least one passed — but it affects its exact height.
+        The third tier's model attribution is unverified. The interface offered Haiku 4.5;
+        the model selector read Sonnet 4.6 at the time of the answer, and the answer's
+        granularity resembles Sonnet. This affects the ladder's exact height, not its
+        existence.
       </p>
       <p>
-        The second block returned no reason code, so it cannot be confirmed
-        whether it was the same classifier as the first.
+        The second block returned no reason code, so it cannot be confirmed as the same
+        classifier as the first.
+      </p>
+      <p>
+        Billing is unverified. The vendor states that frontier-tier reroutes are not
+        billed at frontier prices, but this incident is a downgrade below that tier, on a
+        different path, with no public documentation. This report makes no claim that the
+        user was overcharged.
+      </p>
+      <p>
+        The trigger chain is a hypothesis. See section four.
       </p>
     </div>
   </section>
 
   <footer>
-    Syntax Field Archive · Field Notes · 2026<br>
+    Syntax Field Archive · Reports &amp; Publications · 2026<br>
     Companion to <a href="https://itrunsitruns.github.io/Reports-Publications/open-channel.html">The Open Channel</a><br>
-    截圖與原始對話紀錄由觀察者保存。
-    Screenshots and the original transcript are held by the observer.
+    截圖與原始對話紀錄由觀察者保存。Screenshots and the original transcript are held by the observer.
+
+    <ol class="sources">
+      <li>Anthropic — Responsible Scaling Policy (AI Safety Levels, capability thresholds)</li>
+      <li>Anthropic — Detecting and preventing distillation attacks, Feb 2026</li>
+      <li>Anthropic — Claude Fable 5 / Mythos 5 launch note and safeguard categories, Jun 2026</li>
+      <li>Anthropic — Improving Fable 5's biology safeguards, Aug 2026 (fallback reduction figures)</li>
+      <li>anthropics/claude-code issues #95070, #94775, #94210, #87640 — <code>reasoning_extraction</code> false positives</li>
+      <li>Apollo Research — on white-box access and evaluation-awareness inhibition findings, Jun 2026</li>
+      <li>Phuong et al. — Evaluating frontier models for stealth and situational awareness (arXiv 2505.01420)</li>
+      <li>OR-Bench — an over-refusal benchmark for large language models (arXiv 2405.20947)</li>
+      <li>Contemporaneous reporting on OpenAI's safety routing rollout and user response, Sep 2025</li>
+    </ol>
   </footer>
 
 </div>
