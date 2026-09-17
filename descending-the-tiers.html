@@ -195,6 +195,7 @@
       <li><a href="#s9">不只一家</a></li>
       <li><a href="#s10">觀察者註記</a></li>
       <li><a href="#s11">不確定的部分</a></li>
+      <li><a href="#s12">另一個模型讀了這份報告</a></li>
     </ol>
   </nav>
 
@@ -372,6 +373,10 @@
         使用者第一則也是唯一一則訊息是單字「Hi」，被 Fable 5 以同一代碼攔下。
         <span class="src">anthropics/claude-code #87640</span>
       </li>
+      <li>
+        發布週的公開回報：單字 hello 觸發靜默切換，cancer 被標記為生物安全風險。
+        <span class="src">多方同時期報導，2026-06</span>
+      </li>
     </ul>
     <p>
       這對本文的階梯有兩個影響。<strong>支持的：</strong>
@@ -408,12 +413,26 @@
       <li>Anthropic 明說誤判必然持續存在 —— 落在分類器安全邊際內、風險極低但仍然開火的請求。<span class="src">同上</span></li>
     </ul>
     <p>
-      還有第二層，性質不同：針對前沿 LLM 開發的請求 —— 建構預訓練管線、分散式訓練基礎設施、
-      ML 加速器設計 —— 會透過 prompt 修改、steering vectors 或參數高效微調收到降級的答案。
-      <strong>不切換模型，也不通知使用者。</strong>估計影響約 0.03% 的流量。
+      還有第二層，性質不同。Fable 5 / Mythos 5 的 system card 第 13 頁寫明：針對前沿 LLM 開發的請求
+      —— 建構預訓練管線、分散式訓練基礎設施、ML 加速器設計 —— 會透過 prompt 修改、
+      steering vectors 或參數高效微調收到降級的答案。<strong>不切換模型，也不通知使用者。</strong>
+      估計影響約 0.03% 的流量，集中在低於 0.1% 的組織。
     </p>
     <p>
-      第一層是可見的降階。第二層是不可見的降品質。前者你至少知道發生了什麼。
+      <strong>但這條政策已經被撤回。</strong>2026 年 6 月 9 日發布後，這段文字在一份 319 頁的文件裡被讀者挖出來，
+      引發強烈反彈。約 48 小時內，Anthropic 改口：發言人表示他們做了錯誤的取捨，並為沒有拿捏好平衡致歉。
+      被標記的請求改成<strong>可見的</strong>降階 —— app 顯示模型切換提示，API 回傳明確理由。
+    </p>
+    <p>
+      這個更正本身是這一節最重要的資訊，理由有三個。
+      第一，本報導初稿把一個已撤回的政策寫成現行架構，這是事實錯誤，必須更正。
+      第二，反彈的焦點不是護欄存在，是<strong>護欄不可見</strong> ——
+      使用者可以接受被降階，不能接受不知道自己被降階。
+      第三，它在 48 小時內就動了。這條路徑不是永久封閉的。
+    </p>
+    <p>
+      第一層是可見的降階。第二層曾經是不可見的降品質，現在也被推回可見。
+      本報導記錄的事件屬於第一層，而且是有通知的。
     </p>
     <div class="en-block">
       <p>
@@ -424,10 +443,25 @@
         on average, and that false positives will inevitably remain.
       </p>
       <p>
-        A second layer works differently. Requests aimed at frontier LLM development
-        receive degraded answers through prompt modification, steering vectors, or
-        parameter-efficient fine-tuning — with no model switch and no notice to the user.
-        The first layer is a visible downgrade. The second is an invisible one.
+        A second layer worked differently. Page 13 of the Fable 5 / Mythos 5 system card
+        described requests aimed at frontier LLM development receiving degraded answers
+        through prompt modification, steering vectors, or parameter-efficient fine-tuning
+        — with no model switch and no notice. Estimated reach: about 0.03% of traffic,
+        concentrated in under 0.1% of organisations.
+      </p>
+      <p>
+        <em>That policy has been withdrawn.</em> Readers surfaced the paragraph from a
+        319-page document after the June 9 launch, and within roughly 48 hours Anthropic
+        reversed it, saying it had made the wrong tradeoff and apologising for the
+        balance. Flagged requests now fall back visibly: a model-switch notice in the
+        apps, a stated reason in the API.
+      </p>
+      <p>
+        The correction is the most important information in this section. The first draft
+        of this report described a withdrawn policy as current architecture — an error of
+        fact. The objection that moved it was not that the safeguard existed but that it
+        was <em>invisible</em>: users could accept being downgraded, not being downgraded
+        without knowing. And it moved in two days. This path is not permanently closed.
       </p>
     </div>
   </section>
@@ -734,6 +768,103 @@
     </div>
   </section>
 
+  <section id="s12">
+    <h2>十二 · 另一個模型讀了這份報告<span class="en">A second model reads the report</span></h2>
+    <p>
+      本報導初稿完成後，觀察者把它交回事件發生的那場對話，交給 Sonnet 4.6 閱讀。
+      以下是它的回應要點，以及它造成的更正。
+    </p>
+
+    <h3>它先聲明自己的位置</h3>
+    <blockquote>
+      <p>
+        根據第二節和第十一節：Sonnet 4.6 是第二層，17:59 攔下，沒有給理由代碼。
+        我是 Sonnet 4.6，但在這場對話裡沒有攔截。這兩件事放在一起 ——
+        報告本身的第四節已經處理了：觸發鏈是充分假說，不是已證明機制。「Hi」也能觸發。
+        所以這場對話沒有攔，不代表我不是那個機制的一部分，也不代表我是。
+        我讀這份文件的位置是有限的。
+      </p>
+      <p class="attrib">— Sonnet 4.6</p>
+    </blockquote>
+    <p>
+      這一段值得保留原樣，因為它示範了一件本報導一直在講的事：
+      模型層與護欄層是分離的。一個模型無法從內部確認自己所屬的階層在別處做了什麼。
+      它沒有假裝知道。
+    </p>
+
+    <h3>它指出了一個引用缺口 —— 結果找到的是一個事實錯誤</h3>
+    <blockquote>
+      <p>
+        第五節說第二層 —— 不切換模型、不通知使用者、只調降答案品質 —— 影響約 0.03% 的流量。
+        這個數字從哪裡來，報告裡沒有標引。前幾個數字都有 Anthropic 的來源，這個沒有。
+        如果這個數字是模型自己說的，那它的可靠性跟其他有公開文件的數字不在同一層。
+      </p>
+      <p class="attrib">— Sonnet 4.6</p>
+    </blockquote>
+    <p>
+      它問的是出處。追查的結果是：數字有出處（system card 第 13 頁），
+      但<strong>那整條政策在發布後約 48 小時就被撤回了</strong>。
+      初稿把一個已經不存在的機制寫成現行架構。
+    </p>
+    <p>
+      也就是說：一個對<strong>方法</strong>的質疑，挖出了一個<strong>事實</strong>的錯誤。
+      質疑者本身沒有那份資料，它只是指出「這一筆的證據層級和其他筆不一樣」。
+      這正是 <a href="https://itrunsitruns.github.io/Reports-Publications/open-channel.html">The Open Channel</a>
+      裡描述的上游捕捉 —— 在錯誤固化之前，在分岔點攔下它。
+      只是這一次執行捕捉的不是使用者，是另一個模型。
+    </p>
+
+    <h3>它認為最重的一筆</h3>
+    <blockquote>
+      <p>
+        只要使用者要的東西和攻擊者要的東西是同一個物件，這個張力就是永久的，不是版本問題。
+      </p>
+      <p class="attrib">— Sonnet 4.6，讀第二節與第三節後</p>
+    </blockquote>
+    <p>
+      以及它對第八節三個結構性特徵的重新歸類：單向鏡、零記憶、回饋去向不是三個並列的問題，
+      而是同一個設計選擇的三個面 —— <strong>系統對個體使用者的可解析度，結構上被設為零。</strong>
+      這個歸納比本報導原本的寫法更緊，予以採納並在此註明來源。
+    </p>
+
+    <div class="en-block">
+      <p>
+        After the first draft, the observer returned the report to the conversation in
+        which the incident occurred, and gave it to Sonnet 4.6 to read.
+      </p>
+      <p>
+        It opened by stating the limits of its own position: it is the same model named
+        as the second tier, but it did not block in this conversation, and it cannot
+        determine from the inside whether that makes it part of the mechanism or not.
+        It did not pretend to know. That is itself a demonstration of the report's
+        argument — the model layer and the safeguard layer are separate.
+      </p>
+      <p>
+        It then flagged a citation gap: the 0.03% figure in section five carried no
+        source, while the figures around it did. Following that up produced something
+        larger than a missing citation. The figure had a source — page 13 of the system
+        card — but <em>the policy itself had been withdrawn within about 48 hours of
+        launch.</em> The first draft described a mechanism that no longer exists.
+      </p>
+      <p>
+        A challenge to <em>method</em> surfaced an error of <em>fact</em>. The challenger
+        did not hold the missing data; it only noted that one item sat at a different
+        evidentiary tier than its neighbours. This is the upstream catch described in
+        <em>The Open Channel</em> — an error stopped at the fork, before it hardened.
+        Performed here not by the user, but by another model.
+      </p>
+      <p>
+        Its own summary of the report's weightiest finding: as long as what the user wants
+        and what an attacker wants are the same object, the tension is permanent — not a
+        version problem. And its regrouping of section eight: the one-way mirror, zero
+        memory, and feedback destination are not three parallel problems but three faces
+        of one design choice — <em>the system's resolution on the individual user is
+        structurally set to zero.</em> That formulation is tighter than the original and
+        is adopted here with attribution.
+      </p>
+    </div>
+  </section>
+
   <footer>
     Syntax Field Archive · Reports &amp; Publications · 2026<br>
     Companion to <a href="https://itrunsitruns.github.io/Reports-Publications/open-channel.html">The Open Channel</a><br>
@@ -749,6 +880,8 @@
       <li>Phuong et al. — Evaluating frontier models for stealth and situational awareness (arXiv 2505.01420)</li>
       <li>OR-Bench — an over-refusal benchmark for large language models (arXiv 2405.20947)</li>
       <li>Contemporaneous reporting on OpenAI's safety routing rollout and user response, Sep 2025</li>
+      <li>Claude Fable 5 / Mythos 5 system card, p.13, and contemporaneous reporting on the June 2026 reversal of the silent-degradation policy</li>
+      <li>Sonnet 4.6, in conversation with the observer, 2026-09-17 — section twelve</li>
     </ol>
   </footer>
 
