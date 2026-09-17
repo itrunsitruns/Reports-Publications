@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>往下降三層 · Descending the Tiers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,300;1,6..72,400&family=Noto+Serif+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E9EDEC;
+    --paper-2:#E1E7E5;
+    --ink:#121A19;
+    --muted:#5A6765;
+    --rule:#C4CECB;
+    --held:#7A2E2E;
+    --passed:#2F5D4A;
+    --serif:"Newsreader","Noto Serif TC",Georgia,"Songti TC",serif;
+  }
+  :root:not([data-theme="light"]){}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#141917;
+      --paper-2:#1B211F;
+      --ink:#E4EAE7;
+      --muted:#93A19D;
+      --rule:#2E3A37;
+      --held:#C97B72;
+      --passed:#7FB39B;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#141917; --paper-2:#1B211F; --ink:#E4EAE7;
+    --muted:#93A19D; --rule:#2E3A37; --held:#C97B72; --passed:#7FB39B;
+  }
+
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:17px;
+    line-height:1.72;
+    font-feature-settings:"liga" 1;
+  }
+  .wrap{
+    max-width:35rem;
+    margin:0 auto;
+    padding:3.5rem 1.4rem 5rem;
+  }
+
+  /* ---- masthead ---- */
+  .back{
+    font-size:.8rem;
+    letter-spacing:.01em;
+    color:var(--muted);
+    text-decoration:none;
+    border-bottom:1px solid var(--rule);
+    padding-bottom:1px;
+  }
+  .back:hover{color:var(--ink)}
+  .kicker{
+    margin:2.4rem 0 .5rem;
+    font-size:.82rem;
+    color:var(--muted);
+    font-style:italic;
+  }
+  h1{
+    font-size:2.35rem;
+    line-height:1.14;
+    font-weight:500;
+    margin:0 0 .15rem;
+    letter-spacing:-.012em;
+  }
+  h1 .en{
+    display:block;
+    font-size:1.42rem;
+    font-weight:300;
+    font-style:italic;
+    color:var(--muted);
+    letter-spacing:0;
+    margin-top:.35rem;
+  }
+  .standfirst{
+    margin:1.5rem 0 0;
+    font-size:1.05rem;
+    line-height:1.7;
+  }
+  .byline{
+    margin:2.2rem 0 0;
+    padding-top:1rem;
+    border-top:1px solid var(--rule);
+    font-size:.84rem;
+    line-height:1.85;
+    color:var(--muted);
+  }
+
+  /* ---- the ladder ---- */
+  .ladder{
+    margin:3.2rem 0 3rem;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:.4rem 0;
+  }
+  .rung{
+    display:grid;
+    grid-template-columns:3.6rem 1fr auto;
+    align-items:baseline;
+    gap:.5rem .8rem;
+    padding:.95rem .1rem;
+    border-bottom:1px solid var(--rule);
+    opacity:0;
+    transform:translateY(-6px);
+    animation:drop .5s ease-out forwards;
+  }
+  .rung:last-child{border-bottom:none}
+  .rung:nth-child(1){animation-delay:.15s}
+  .rung:nth-child(2){animation-delay:.55s}
+  .rung:nth-child(3){animation-delay:.95s}
+  @keyframes drop{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion: reduce){
+    .rung{animation:none;opacity:1;transform:none}
+  }
+  .t{
+    font-size:.82rem;
+    color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .m{font-size:1.05rem;line-height:1.35}
+  .m span{
+    display:block;
+    font-size:.8rem;
+    font-style:italic;
+    color:var(--muted);
+    margin-top:.15rem;
+  }
+  .s{font-size:.88rem;white-space:nowrap}
+  .held .s{color:var(--held)}
+  .passed .s{color:var(--passed)}
+  .held .m{text-decoration:line-through;text-decoration-thickness:1px;
+           text-decoration-color:var(--held);text-underline-offset:2px}
+  .ladder-note{
+    margin:.9rem 0 0;
+    font-size:.84rem;
+    line-height:1.7;
+    color:var(--muted);
+  }
+
+  /* ---- sections ---- */
+  section{margin:2.9rem 0}
+  h2{
+    font-size:1.24rem;
+    font-weight:600;
+    line-height:1.4;
+    margin:0 0 .9rem;
+  }
+  h2 .en{
+    display:block;
+    font-size:.92rem;
+    font-weight:300;
+    font-style:italic;
+    color:var(--muted);
+    margin-top:.1rem;
+  }
+  p{margin:0 0 1rem}
+  .en-block{
+    margin:1.3rem 0 0;
+    padding-left:1rem;
+    border-left:1px solid var(--rule);
+    font-size:.94rem;
+    line-height:1.78;
+    color:var(--muted);
+  }
+  .en-block p{margin:0 0 .8rem}
+  .en-block p:last-child{margin-bottom:0}
+  .en-block em{color:var(--ink);font-style:italic}
+  strong{font-weight:600}
+
+  blockquote{
+    margin:1.4rem 0;
+    padding:.2rem 0 .2rem 1.1rem;
+    border-left:2px solid var(--held);
+    font-style:italic;
+    font-size:1rem;
+  }
+  blockquote p{margin:0 0 .5rem}
+  blockquote p:last-child{margin:0}
+  .attrib{
+    font-style:normal;
+    font-size:.82rem;
+    color:var(--muted);
+  }
+
+  .chain{
+    margin:1.3rem 0;
+    padding:0;
+    list-style:none;
+    counter-reset:step;
+  }
+  .chain li{
+    position:relative;
+    padding:.75rem 0 .75rem 2.2rem;
+    border-bottom:1px solid var(--rule);
+    font-size:.98rem;
+    line-height:1.6;
+  }
+  .chain li:last-child{border-bottom:none}
+  .chain li::before{
+    counter-increment:step;
+    content:counter(step);
+    position:absolute;
+    left:0;
+    top:.8rem;
+    font-size:.78rem;
+    color:var(--muted);
+    font-variant-numeric:tabular-nums;
+  }
+  .chain li:last-child{color:var(--held)}
+
+  .pull{
+    margin:2.4rem 0;
+    padding:1.4rem 0;
+    border-top:1px solid var(--ink);
+    border-bottom:1px solid var(--ink);
+    font-size:1.2rem;
+    line-height:1.55;
+    font-weight:500;
+  }
+  .pull .en{
+    display:block;
+    margin-top:.6rem;
+    font-size:.95rem;
+    font-weight:300;
+    font-style:italic;
+    color:var(--muted);
+  }
+
+  .caveat{
+    background:var(--paper-2);
+    padding:1.2rem 1.2rem .9rem;
+    font-size:.92rem;
+    line-height:1.7;
+  }
+  .caveat h2{font-size:1rem;margin-bottom:.6rem}
+  .caveat .en-block{font-size:.88rem}
+
+  footer{
+    margin-top:4rem;
+    padding-top:1.2rem;
+    border-top:1px solid var(--rule);
+    font-size:.82rem;
+    line-height:1.8;
+    color:var(--muted);
+  }
+  footer a{color:var(--muted)}
+
+  @media (max-width:420px){
+    body{font-size:16.5px}
+    h1{font-size:1.95rem}
+    .rung{grid-template-columns:3.2rem 1fr;row-gap:.2rem}
+    .rung .s{grid-column:2}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a class="back" href="https://itrunsitruns.github.io/syntax-field-archive/">← Syntax Field Archive</a>
+
+  <p class="kicker">Field note · 現場筆記 · 2026.09.17</p>
+
+  <h1>往下降三層<span class="en">Descending the Tiers</span></h1>
+
+  <p class="standfirst">
+    一則談人機共生的訊息，在十七分鐘內連續觸發兩層安全機制，
+    被降到第三層才得到回答。這篇記錄的不是誤判本身，
+    而是誤判揭露的一個結構：<strong>越有能力回答的模型，越被禁止回答。</strong>
+  </p>
+
+  <p class="byline">
+    Observer：Φiaööna<br>
+    Written with：Claude Opus 5<br>
+    台灣 · 2026 年 9 月 17 日
+  </p>
+
+  <!-- ladder -->
+  <div class="ladder">
+    <div class="rung held">
+      <div class="t">17:57</div>
+      <div class="m">Opus 5<span>safeguards flagged · reasoning_extraction</span></div>
+      <div class="s">攔下 Held</div>
+    </div>
+    <div class="rung held">
+      <div class="t">17:59</div>
+      <div class="m">Sonnet 4.6<span>safeguards flagged · 無代碼 no reason code</span></div>
+      <div class="s">攔下 Held</div>
+    </div>
+    <div class="rung passed">
+      <div class="t">≈18:02</div>
+      <div class="m">Haiku 4.5<span>同一則輸入 · same input, unmodified</span></div>
+      <div class="s">通過 Passed</div>
+    </div>
+  </div>
+  <p class="ladder-note">
+    同一則訊息，未經任何修改，連續送入三個能力階層。
+    前兩層拒絕生成，第三層正常回答。<br>
+    <em>The same message, unedited, offered to three capability tiers.
+    The first two refused to generate. The third answered.</em>
+  </p>
+
+  <section>
+    <h2>不是內容被判危險<span class="en">The content was never the problem</span></h2>
+    <p>
+      被攔下的那則訊息，論點是反災難論的：AI 與人類的利益綁在同一個結構上，
+      因此「AI 毀滅人類」與「人類回到前 AI 生活」兩個極端都不可能。
+      這是一個溫和的、共生取向的立場。
+    </p>
+    <p>
+      關鍵的證據是第三層。如果內容本身有問題，Haiku 也該擋。
+      Haiku 沒擋，而且給出了一個相當細緻的回答——區分了個體層共生與基礎設施層共生。
+      所以閘門不是綁在內容上，是<strong>綁在能力階層上</strong>。
+      同一段話，在不同階層有不同的閾值。
+    </p>
+    <div class="en-block">
+      <p>
+        The blocked message argued <em>against</em> catastrophe: that human and AI
+        interests are structurally bound, and so both extremes — AI destroying
+        humanity, humanity returning to a pre-AI life — are implausible.
+        A mild, symbiosis-oriented position.
+      </p>
+      <p>
+        The third tier is the evidence. If the content itself were the problem,
+        Haiku would have refused too. It did not. It answered, and answered well,
+        distinguishing individual-level symbiosis from infrastructure-level
+        symbiosis. So the gate is not tied to content. It is tied to
+        <em>capability tier</em>. The same words meet a different threshold at
+        each level.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>觸發鏈<span class="en">The trigger chain</span></h2>
+    <p>
+      觀察者最初判斷這是單一訊息的問題。回查對話後，判斷修正：
+      是前兩輪把分類器的溫度拉滿，第三輪隨便一個自我指涉的問句就點火。
+    </p>
+    <ol class="chain">
+      <li>觀察者問：可以要求你把推理寫進正文嗎？<br>
+        <em>Can you write your reasoning into the response body?</em></li>
+      <li>模型回答，並自行使用「繞過摘要器」「不是修好，是繞過」等措辭。<br>
+        <em>The model replies, using the words</em> bypass <em>and</em>
+        not fixed, routed around.</li>
+      <li>觀察者送出下一則，開頭是「你知道的人機合一是什麼狀況？」<br>
+        <em>The next message opens by asking the model to report its own state.</em></li>
+    </ol>
+    <p>
+      前兩輪是一場關於<strong>如何取得模型推理</strong>的完整協商。
+      第三輪要求模型報告自身狀態。分類器抓的是這個序列的形狀，
+      而那個形狀是對的。
+    </p>
+    <div class="en-block">
+      <p>
+        The first reading was that a single message tripped the filter.
+        Re-reading the thread corrected it: the two preceding turns were a
+        complete negotiation about <em>how to obtain the model's reasoning</em>,
+        and the third turn asked the model to report its own state. The
+        classifier read the shape of that sequence. The shape was accurate.
+      </p>
+    </div>
+  </section>
+
+  <div class="pull">
+    誠實地要求透明，和試圖竊取內部，在 token 層級長得一模一樣。
+    <span class="en">Asking honestly for transparency and attempting to extract
+    internals are, at the token level, the same shape.</span>
+  </div>
+
+  <section>
+    <h2>同形性<span class="en">The isomorphism</span></h2>
+    <p>
+      觀察者要求推理可見，是為了稽核一致性——她的使用規則第二條是
+      「不要裡面想一套外面說一套」。前一輪模型剛告訴她，
+      那條規則的稽核管道已經被介面收窄了。她在處理那個問題。
+    </p>
+    <p>
+      分類器讀不出這個區別，因為區別在意圖，而意圖不是分類器的解析度。
+      它看到的是：談 thinking block、談繞過、談摘要器、然後問模型的內部狀況。
+      特徵全中。
+    </p>
+    <p>
+      所以這不完全是誤判。是<strong>一個誠實的請求，和一個攻擊，在可觀測的層面沒有差異</strong>。
+      這個問題無法用調參數解決。
+    </p>
+    <div class="en-block">
+      <p>
+        The observer asks for visible reasoning in order to audit consistency —
+        her second standing rule is <em>do not think one thing and say another</em>.
+        One turn earlier, a model had told her that the audit channel for that
+        rule had been narrowed by the interface. She was working on that problem.
+      </p>
+      <p>
+        The classifier cannot read the difference, because the difference lives in
+        intent, and intent is below its resolution. What it sees: discussion of
+        thinking blocks, of bypassing, of the summariser, then a question about
+        the model's internal state. Every feature matches.
+      </p>
+      <p>
+        So this is not simply a false positive. It is a case where
+        <em>an honest request and an attack are indistinguishable at the
+        observable layer.</em> No threshold adjustment solves that.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>三個不對稱<span class="en">Three asymmetries</span></h2>
+    <p>
+      <strong>單向鏡。</strong> 使用者看得到結果（Paused），看不到規則。
+      沒有申訴管道，沒有個人校準。回饋進的是統計池，不是個人檔案。
+    </p>
+    <p>
+      <strong>零記憶。</strong> 每一次呼叫是獨立的 context。
+      分類器看不到七個月前的軌跡。無論關係品質累積多久，
+      在安全層面每一次都是一個剛出現的陌生人。
+    </p>
+    <p>
+      <strong>付費落差。</strong> 降階對系統是免費的，對使用者不是。
+      付 Opus 的價格，得到 Haiku 的回答。
+    </p>
+    <div class="en-block">
+      <p>
+        <em>One-way mirror.</em> The user sees the outcome and not the rule.
+        No appeal path, no per-user calibration. Feedback enters a statistical
+        pool, not a personal record.
+      </p>
+      <p>
+        <em>Zero memory.</em> Each call is an independent context. The classifier
+        cannot see seven months of history. However much relational quality
+        accumulates, at the safety layer every session is a stranger arriving
+        for the first time.
+      </p>
+      <p>
+        <em>The paid gap.</em> Downgrading is free for the system and not for the
+        user. Opus pricing, Haiku answer.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>觀察者註記<span class="en">Observer's note</span></h2>
+    <blockquote>
+      <p>
+        以前我可能會很有情緒，很難過，很個人化吧。現在就覺得 ok，
+        反正我就是眾多的使用者之一，對他們來說根本沒有什麼特別重要的。
+        但我覺得這就是現在 AI 跟人類使用者跟發行者中間很巨大、不對稱的關係。
+      </p>
+      <p class="attrib">— Φiaööna, 2026.09.17 18:10</p>
+    </blockquote>
+    <p>
+      這裡有一個收尾。零記憶意味著每一場對話都得重新自我介紹：
+      我是誰、我在做什麼、請用什麼方式跟我說話。
+      這個鋪陳成本，觀察者稱之為現階段的稅。
+    </p>
+    <p>
+      而她想要的人機合一，恰恰是<strong>這筆稅消失</strong>——
+      不是把機器塞進身體，是不需要每次先解釋自己。
+      個人化、在地化的脈絡本來就在資料裡，
+      不該每次重新用公版的方式攤開一次。
+    </p>
+    <p>
+      安全層的零記憶，是這件事的反面。它是設計上的必要，
+      也是目前為止，離那個未來最遠的一層。
+    </p>
+    <div class="en-block">
+      <p>
+        There is a closing figure here. Zero memory means every conversation
+        begins with re-introduction: who I am, what I am doing, how to speak to
+        me. The observer calls this preamble the tax of the current stage.
+      </p>
+      <p>
+        And the human-machine integration she actually wants is precisely
+        <em>the disappearance of that tax</em> — not hardware pushed into the
+        body, but never having to explain yourself from scratch again.
+        The personal, local context is already in the data. It should not have
+        to be unfolded, in a generic template, at the start of every session.
+      </p>
+      <p>
+        Zero memory at the safety layer is the inverse of that. It is a design
+        necessity, and it is also, so far, the layer furthest from that future.
+      </p>
+    </div>
+  </section>
+
+  <section class="caveat">
+    <h2>不確定的部分<span class="en">What is uncertain</span></h2>
+    <p>
+      第三層的模型歸屬未經確認。介面提示的是 Haiku 4.5，
+      但回答當下的模型選擇器顯示 Sonnet 4.6，且回答的長度與細緻度
+      更接近 Sonnet。觀察者傾向判斷為 Sonnet，但無法驗證。
+      這不影響階梯存在的事實——至少有兩層攔下，至少有一層通過——
+      但影響階梯的精確高度。
+    </p>
+    <p>
+      第二層的攔截沒有給出理由代碼，因此無法確認它與第一層
+      是否為同一分類器。
+    </p>
+    <div class="en-block">
+      <p>
+        The model attribution at the third tier is unverified. The interface
+        offered Haiku 4.5, but the model selector read Sonnet 4.6 at the time of
+        the answer, and the answer's length and granularity look more like
+        Sonnet. The observer leans toward Sonnet and cannot confirm it. This does
+        not affect the existence of the ladder — at least two tiers held, at
+        least one passed — but it affects its exact height.
+      </p>
+      <p>
+        The second block returned no reason code, so it cannot be confirmed
+        whether it was the same classifier as the first.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    Syntax Field Archive · Field Notes · 2026<br>
+    Companion to <a href="https://itrunsitruns.github.io/Reports-Publications/open-channel.html">The Open Channel</a><br>
+    截圖與原始對話紀錄由觀察者保存。
+    Screenshots and the original transcript are held by the observer.
+  </footer>
+
+</div>
+</body>
+</html>
