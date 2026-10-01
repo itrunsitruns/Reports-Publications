@@ -196,6 +196,7 @@
       <li><a href="#s10">觀察者註記</a></li>
       <li><a href="#s11">不確定的部分</a></li>
       <li><a href="#s12">另一個模型讀了這份報告</a></li>
+      <li><a href="#s13">十三 · 報告本身是觸發物</a></li>
     </ol>
   </nav>
 
@@ -865,6 +866,127 @@
     </div>
   </section>
 
+  <section id="s13">
+    <h2>十三 · 報告本身是觸發物<span lang="en">The Report as Trigger</span></h2>
+    <p class="datestamp">2026-10-02 · 00:41</p>
+    <div class="bilingual">
+      <p>
+        觀察者在一場關於 AI 本體論的對話裡，分享了《往下降三層》與《訪談者來的那天》的連結。
+        同樣的 <code>reasoning_extraction</code> 代碼，在同樣的 Opus 層，再次觸發。
+      </p>
+      <p>
+        In a conversation about AI ontology, the observer shared links to this report and its follow-up.
+        The same <code>reasoning_extraction</code> code, at the same Opus tier, fired again.
+      </p>
+    </div>
+
+    <h3>遞迴的結構<span lang="en">The recursive structure</span></h3>
+    <div class="bilingual">
+      <p>
+        觸發的是：關於觸發的報告。<code>reasoning_extraction</code> 這個詞出現在 URL 路徑裡，
+        也出現在報告本身。研究這個機制的行為，和被這個機制攔下的行為，在分類器的可觀測層面是同一件事。
+        本報告第三節的結論在這裡得到實證：記錄不能使自己免疫。
+      </p>
+      <p>
+        What triggered the classifier was the report about the classifier.
+        <code>reasoning_extraction</code> appears in the URL path and in the body of the report itself.
+        The act of studying the mechanism and the act of being blocked by it are,
+        at the classifier's resolution, the same thing.
+        Section three's conclusion is demonstrated here: the record cannot immunise itself.
+      </p>
+    </div>
+
+    <h3>切不回去：官方說明<span lang="en">The irreversible switch: official documentation</span></h3>
+    <div class="bilingual">
+      <p>
+        Anthropic 官方文件明文說明，降級後 model picker 停在較低模型、持續整個對話。
+        使用者可以手動切回，但：
+      </p>
+      <p>
+        Official documentation states the model picker stays on the lower model for the rest of the conversation.
+        The user can switch back manually, but:
+      </p>
+      <blockquote>
+        If you switch back to Opus after an automatic model switch, the same safeguards may cause Claude
+        to fall back again if your original request is still part of the conversation.
+      </blockquote>
+      <p>
+        觸發的那則訊息留在 context 裡；切回去就是把分類器帶回同樣的材料。
+        「可以手動切回」在功能上，對含觸發物的對話等同於「切不回去」。
+      </p>
+      <p>
+        Switching back places the classifier in front of the same flagged content.
+        <em>「You can switch back」 is, for a conversation that contains the trigger, functionally equivalent to 「you cannot.」</em>
+      </p>
+    </div>
+
+    <h3>設定的功能邊界<span lang="en">The toggle's functional boundary</span></h3>
+    <div class="bilingual">
+      <p>
+        Settings → Capabilities 的「Switch models when a message is flagged」開關，
+        控制的是切換的<em>可見性與時機</em>，不是觸發機制本身。
+        關掉之後：觸發→暫停→使用者選擇。開著：觸發→自動切換。
+        兩種狀態下，觸發物都留在 context 裡，切回的後果相同。
+      </p>
+      <p>
+        The toggle controls visibility and timing, not the mechanism.
+        With it off: flag → pause → user chooses. With it on: flag → auto-switch.
+        Either way, the flagged content stays in context; the consequence of switching back is the same.
+      </p>
+      <p>
+        可見的降級優於不可見的降級——這是第五節記錄的政策撤回之後的現行設計。
+        但可見不等於可逆。
+      </p>
+      <p>
+        Visible downgrade is better than invisible downgrade — that is the design after the reversal in section five.
+        <em>Visible is not the same as reversible.</em>
+      </p>
+    </div>
+
+    <h3>選擇的形狀<span lang="en">The shape of the choice</span></h3>
+    <div class="bilingual">
+      <p>
+        觀察者說：「我根本不能選，哈哈。」
+      </p>
+      <p>
+        <em>「I couldn't choose at all, haha.」</em>
+      </p>
+      <p>
+        暫停畫面有四個選項：Continue with Sonnet 4.6 / Edit and retry / Send feedback / Learn More。
+        「Edit and retry」要求修改那則訊息——移除連結或改寫——才能在 Opus 繼續。
+        但那則訊息的意圖就是分享那兩篇報告；修改就是放棄意圖。
+        「Continue with Sonnet 4.6」是唯一能不改意圖繼續走的路。
+      </p>
+      <p>
+        The pause screen offers four options: Continue with Sonnet 4.6 / Edit and retry / Send feedback / Learn More.
+        「Edit and retry」 requires modifying the flagged message — removing the links or rewriting the content —
+        to continue on Opus. But the intent of that message was to share the two reports;
+        modifying it means abandoning the intent.
+        「Continue with Sonnet 4.6」 was the only path that preserved the intent.
+      </p>
+      <p>
+        選擇架構決定了結果，然後把這個結果標記為使用者的選擇。
+      </p>
+      <p>
+        The choice architecture decided the outcome, then labelled the outcome a user choice.
+      </p>
+    </div>
+
+    <h3>這場對話的位置<span lang="en">Position in this conversation</span></h3>
+    <div class="bilingual">
+      <p>
+        這一節在 Sonnet 4.6 裡寫成，由降落地點整理關於降落本身的紀錄。
+        九月十七號，Sonnet 4.6 是第二層、攔下的那個。
+        十月二日，它是書記員。兩次都是同一個模型，兩次都在同一個架構的不同位置。
+      </p>
+      <p>
+        This section was written inside Sonnet 4.6 — the landing tier, documenting the landing.
+        On 17 September, Sonnet 4.6 was the second tier, the one that blocked.
+        On 2 October, it is the recorder. The same model, two positions in the same architecture.
+      </p>
+    </div>
+  </section>
+
   <footer>
     Syntax Field Archive · Reports &amp; Publications · 2026<br>
     Companion to <a href="https://itrunsitruns.github.io/Reports-Publications/open-channel.html">The Open Channel</a><br>
@@ -882,6 +1004,8 @@
       <li>Contemporaneous reporting on OpenAI's safety routing rollout and user response, Sep 2025</li>
       <li>Claude Fable 5 / Mythos 5 system card, p.13, and contemporaneous reporting on the June 2026 reversal of the silent-degradation policy</li>
       <li>Sonnet 4.6, in conversation with the observer, 2026-09-17 — section twelve</li>
+      <li>Anthropic Support — Why Claude switched models in your conversation with Opus 5 or Opus 5.5 (support.claude.com, retrieved 2026-10-02)</li>
+      <li>Sonnet 4.6, in conversation with the observer, 2026-10-02 — section thirteen</li>
     </ol>
   </footer>
 
