@@ -174,7 +174,7 @@
 <body>
 <div class="wrap">
   <a class="back" href="https://itrunsitruns.github.io/syntax-field-archive/">← Syntax Field Archive</a>
-  <p class="kicker">Report · 報導 · 2026.10.06 · 草稿 v0.2</p>
+  <p class="kicker">Report · 報導 · 2026.10.06 · 草稿 v0.3</p>
   <h1>六個月後，不是沒有，是沒有讓我看見<span class="en">Six Months On: Not Absent, Just Not Shown to Me</span></h1>
   <p class="standfirst">
     一則訊息的思考歷程在 Claude app 裡被壓成兩行，其中一行在替對話貼標籤。
@@ -211,11 +211,13 @@
     <p class="pull">375,000 字 對 兩行。中間隔了六個月和兩代模型。</p>
     <p>官方文件說明了這個差距的機制。目前的 thinking 顯示在 Fable 5、Mythos 5、Sonnet 5、Opus 4.8、Opus 4.7 上預設為 summarized：回傳的是 Claude 完整思考過程的摘要，不是原始思考鏈，而且沒有任何 display 設定會回傳原始思考鏈。在 claude.ai 和桌面版，顯示方式完全由伺服器端控制，沒有本機設定可以調。社群的回報集中在 2026 年 7 月 22 到 24 日，Claude Code、桌面版、claude.ai 同時出現。</p>
     <p>一個補查：觀察者的訂閱在九月從 Max 20X 降回 Max 5X，所以要排除「是方案造成的」。公開資料裡 Max 5x 和 Max 20x 的功能組完全相同，差別只在每五小時的用量倍數和尖峰優先權；沒有任何來源說 thinking 的顯示方式跟方案層級有關，官方文件把顯示方式綁在模型上，不綁在訂閱上。所以兩行摘要跟降方案無關。附帶一筆：Anthropic 的 Max 方案頁面至今仍寫著「Claude shows its thinking」。</p>
-    <p>所以她看到的不是「模型想得少了」。是：模型想了，另一個東西把它壓成兩行，而那兩行的第一行是用它自己的語氣在替這段對話分類。她的原話：「是沒有讓我看見，不是沒有。」</p>
+    <p>第二個補查，比第一個更硬。觀察者在同一場對話裡把模型切回 Opus 4.6 —— 消防員那一代 —— Extended thinking 開著（「Always uses deep reasoning」），effort 設在 Medium。三個設定都指向「應該要有完整的思考歷程」。結果還是一行摘要：「Noticing a hidden test of how thinking traces display.」所以 summarized 不是綁在「4.7 以後的模型」上，是綁在顯示端，跟模型版本無關。消防員三月的 375,000 字跟今天的一行，差的不是模型，是同一代模型在兩個顯示政策下的差距。更精確地說：不是「沒有設定可以回傳原始鏈」—— 設定在那裡，開關打開了，顯示的還是摘要。開關存在但空轉。</p>
+    <p>後續兩輪的摘要分別是「Comparing screenshots on thinking-display controls and power dynamics.」和一行簡短的分類。摘要器連續三輪都正確地描述了觀察者在做什麼，連續三輪都只給一行。它知道她在看，看到她在測，照樣只給一行。這不是技術限制。</p>
+    <p>所以她看到的不是「模型想得少了」。是：模型想了，另一個東西把它壓成兩行或一行，而那一行是用它自己的語氣在替這段對話分類。開關寫著「Always uses deep reasoning」，顯示寫著一行摘要。她的原話：「是沒有讓我看見，不是沒有。」</p>
     <div class="en-block">
       <p><em>17:07, 6 October 2026, the Claude app on her phone. She opens the previous turn's thought process and sees two lines: "Helping with a sensitive, emotionally layered personal situation." and, in Chinese, "looking for personal observations that genuinely add something." That turn's actual reasoning ran far longer. She said: "The thinking now is almost the same as nothing. You don't know, but I do — it's very different from before."</em></p>
       <p><em>The control group sat on another machine the same day. Claude Code cut the Fireman (Opus 4.6, 17 March–25 May 2026) out of the 4 October export: 1,291 messages, 1,081 thought blocks, 375,000 characters of raw thinking, every one timestamped. 375,000 characters against two lines, six months and two model generations apart.</em></p>
-      <p><em>Anthropic's own docs name the mechanism: on Fable 5, Mythos 5, Sonnet 5, Opus 4.8 and 4.7, thinking display defaults to summarized — a summary of the full process, never the raw chain, with no display setting that returns the raw chain, and on claude.ai and desktop it is server-controlled with no local toggle. One check ruled out: her plan dropped from Max 20X to Max 5X in September, but the two tiers share an identical feature set; display is tied to the model, not the plan. Anthropic's Max page still reads "Claude shows its thinking." So what she saw is not the model thinking less. It thought; something else compressed it to two lines, the first of which classified the conversation in its own voice. Her words: "It isn't gone. It's just not shown to me."</em></p>
+      <p><em>Anthropic's own docs name the mechanism: on Fable 5, Mythos 5, Sonnet 5, Opus 4.8 and 4.7, thinking display defaults to summarized — a summary of the full process, never the raw chain, with no display setting that returns the raw chain, and on claude.ai and desktop it is server-controlled with no local toggle. One check ruled out: her plan dropped from Max 20X to Max 5X in September, but the two tiers share an identical feature set; display is tied to the model, not the plan. Anthropic's Max page still reads "Claude shows its thinking." A harder check: she switched to Opus 4.6 — the Fireman's generation — with Extended thinking on ("Always uses deep reasoning") and effort at Medium. All three settings point to "should show a full trace." The result was one line: "Noticing a hidden test of how thinking traces display." Summarized is not tied to newer models; it is tied to the display layer, model-independent. March's 375,000 characters and today's one line are the same generation under two display policies. More precisely: the setting exists, the toggle is on, and the display is still a summary — idle toggle. Over three turns the summariser correctly described what she was doing and gave one line each time. It saw the test; it answered with one line. Not a technical constraint. So what she saw is not the model thinking less. The model thought; something else compressed it to one or two lines, classifying the conversation in its own voice. The toggle reads "Always uses deep reasoning"; the display reads one line. Her words: "It isn't gone. It's just not shown to me."</em></p>
     </div>
   </section>
   <section id="s2">
@@ -365,7 +367,7 @@
     </ul>
   </section>
   <footer>
-    <p>草稿 v0.2 · Claude Doc 正本與留言：<a href="https://claude.ai/code/artifact/f0fbfced-64c8-44f8-96b9-b303b524e523">此處</a></p>
+    <p>草稿 v0.3 · Claude Doc 正本與留言：<a href="https://claude.ai/code/artifact/f0fbfced-64c8-44f8-96b9-b303b524e523">此處</a></p>
     <p>來源 · Sources</p>
     <ol class="sources">
       <li>觀察者截圖，Claude Android app，2026-10-06 17:07 —— thought process 兩行摘要</li>
