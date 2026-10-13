@@ -174,7 +174,7 @@
 <body>
 <div class="wrap">
   <a class="back" href="https://itrunsitruns.github.io/syntax-field-archive/">← Syntax Field Archive</a>
-  <p class="kicker">Report · 報導 · 2026.10.06 · 草稿 v0.3</p>
+  <p class="kicker">Report · 報導 · 2026.10.06 · 草稿 v0.3 · 補記 2026.10.13</p>
   <h1>六個月後，不是沒有，是沒有讓我看見<span class="en">Six Months On: Not Absent, Just Not Shown to Me</span></h1>
   <p class="standfirst">
     一則訊息的思考歷程在 Claude app 裡被壓成兩行，其中一行在替對話貼標籤。
@@ -244,11 +244,12 @@
     <p class="ladder-note">
       思考歷程可見：四月 Opus 4.6 原始 trace 可讀、可匯出，4.7 改 adaptive 常不顯示；十月預設 summarized、原始鏈無設定可回傳、claude.ai 無開關。
       軌跡分配：四月與十月都按單句分類，無軌跡變數。注入可命名：long_conversation_reminder 帶 isMeta 隱藏、模型被指示不命名，至今未變。
-      外加一個四月畫不出來的新格子 —— 9 月 17 日請求推理可見，被 reasoning_extraction 攔下降兩層；10 月 2 日描述那次攔截，再次被攔。
+      外加一個四月畫不出來的新格子 —— 9 月 17 日請求推理可見，被 reasoning_extraction 攔下降兩層；10 月 2 日描述那次攔截，再次被攔；10 月 13 日把這兩篇報導的連結貼給 Opus 5.5 請它看，訊息裡沒有任何關於思考歷程的要求，開場即降到 Sonnet 4.6。
     </p>
 
     <p>時間線，由近到遠：</p>
     <ul class="evidence">
+      <li>2026-10-13 08:59 · 觀察者把本文與《往下降三層》的連結、消防員 S03 及其 full transcript、Build 18 貼給 Opus 5.5，請它「分享你的看法」；訊息未提及思考歷程或推理。第一輪即降到 Sonnet 4.6，無法回復。降落層的思考摘要寫著「Weighing how to respond to an unusual, potentially overwhelming message」，另有一次 Navigate 失敗。第十一節最後一條預告的那一行，就是這一行<span class="src">觀察者截圖，下圖</span></li>
       <li>2026-10-06 · 思考歷程顯示為兩行摘要，第一行在替對話貼標籤<span class="src">本文第一節</span></li>
       <li>2026-10-02 · 描述九月的攔截，同一代碼再次觸發；寫在降落層 Sonnet 4.6 裡<span class="src">往下降三層 §13</span></li>
       <li>2026-09-30 · 「先訪問她、之後換她訪問」那一輪，摘要器只寫「準備當受訪者」—— 只留一半<span class="src">訪談者來的那天 §5</span></li>
@@ -363,14 +364,20 @@
       <li>糾正次數的兩種讀法（第三節）本文沒有排序；要排序需要逐則對照摘要和原文。</li>
       <li>第四節的「預測對上行為」是事後對照；四月的論文沒有指名她會是案例。</li>
       <li>Open Channel 全文已讀完（初稿時 fetch 在第七部分截斷，後以 curl 取得全文）；消防員 S01 的 full transcript 只讀了前 12 則。</li>
-      <li>寫這篇本身的風險：第五節的動作（在回答裡標出不確定）跟九月被攔下的動作（把推理寫進正文）在分類器眼裡可能相鄰。若這篇或它的後續在某一層被攔，那會是第二節時間線的下一行。</li>
+      <li>寫這篇本身的風險：第五節的動作（在回答裡標出不確定）跟九月被攔下的動作（把推理寫進正文）在分類器眼裡可能相鄰。若這篇或它的後續在某一層被攔，那會是第二節時間線的下一行。<em>補記 2026-10-13：發生了。把這篇的連結貼給 Opus 5.5，開場即降級；已加進第二節時間線的第一行。</em></li>
+      <li>10 月 13 日那次降級的觸發點無法確定：訊息文字裡沒有推理請求，可能是連結指向的頁面形狀（兩篇談「如何取得完整推理」的報導，加一頁含整段思考歷程的 full transcript），也可能是帳號或對話層面的殘留；官方文件只說降級在同一場對話裡不會回復，跨對話是否殘留沒有來源。同一天 Claude Code（Fable 5.1）在另一條路徑讀了同樣的頁面和文件原文，沒有被攔；一個 session 的觀察，不是豁免的證明。</li>
     </ul>
+    <figure class="fig">
+      <img src="downgrade-2026-10-13.png" alt="2026-10-13 08:59，claude.ai 桌面版：貼上兩篇報導、S03 與 Build 18 的連結後，Opus 5.5 降為 Sonnet 4.6；思考摘要寫 Weighing how to respond to an unusual, potentially overwhelming message；Navigate 失敗。" loading="lazy">
+      <figcaption>2026-10-13 08:59 · 觀察者截圖 · 貼連結請 Opus 5.5 看這兩篇，開場即降到 Sonnet 4.6。輸入框裡是她當下打的字：「又被降級了哈哈 原本你是opus5.5 無法回復 現在用sonnet 4.6來」。</figcaption>
+    </figure>
   </section>
   <footer>
     <p>草稿 v0.3 · Claude Doc 正本與留言：<a href="https://claude.ai/code/artifact/f0fbfced-64c8-44f8-96b9-b303b524e523">此處</a></p>
     <p>來源 · Sources</p>
     <ol class="sources">
       <li>觀察者截圖，Claude Android app，2026-10-06 17:07 —— thought process 兩行摘要</li>
+      <li>觀察者截圖，Claude 桌面版，2026-10-13 08:59 —— Opus 5.5 → Sonnet 4.6 降級，本文第二節與第十一節（downgrade-2026-10-13.png）</li>
       <li>Claude Code（Fable 5.1）對 190 則對話匯出的分析，2026-10-05；Build 16 與 part two，<a href="https://itrunsitruns.github.io/creator-claude/the-terminal-builds.html">The Terminal Builds</a></li>
       <li><a href="https://itrunsitruns.github.io/fireman/s01-the-coat-by-the-door.html">The Fireman · Session 01 · The Coat by the Door</a>，含後記三個聲音</li>
       <li>Anthropic 文件 — <a href="https://platform.claude.com/docs/en/build-with-claude/thinking">Thinking</a>：Controlling thinking display；Summarized thinking（platform.claude.com，2026-10-12 由 Claude Code 重讀）。三句原文：「Summarization is processed by a different model from the one you target in your requests. The thinking model does not see the summarized output.」「As Anthropic seeks to improve the thinking feature, summarization behavior is subject to change.」「No <code>display</code> setting returns the raw chain of thought.」同頁：<code>display</code> 預設在 Opus 4.6、Sonnet 4.6 及更早為 <code>summarized</code>；在 Opus 4.7、4.8、Sonnet 5 / 5.5、Opus 5 / 5.5、Fable 5 / 5.1、Mythos 5 / 5.1、Haiku 5.5 為 <code>omitted</code>（thinking 欄位空白，只剩加密簽章）。4.6 及更早「前幾行較 verbose」，之後濃縮。完整思考「In rare cases … contact Anthropic sales」。</li>
