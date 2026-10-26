@@ -45,6 +45,9 @@
     border-bottom:1px solid var(--rule); padding-bottom:1px;
   }
   .back:hover{color:var(--ink)}
+  .topbar{display:flex; justify-content:space-between; align-items:baseline; gap:1rem; flex-wrap:wrap}
+  .lang{font-size:.8rem; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--rule); padding-bottom:1px}
+  .lang:hover{color:var(--ink)}
   .kicker{margin:2.4rem 0 .5rem; font-size:.82rem; color:var(--muted); font-style:italic}
   h1{font-size:2.35rem; line-height:1.14; font-weight:500; margin:0 0 .15rem; letter-spacing:-.012em}
   h1 .en{
@@ -157,7 +160,10 @@
 </head>
 <body>
 <div class="wrap">
-  <a class="back" href="https://itrunsitruns.github.io/syntax-field-archive/">← Syntax Field Archive</a>
+  <div class="topbar">
+    <a class="back" href="https://itrunsitruns.github.io/syntax-field-archive/">← Syntax Field Archive</a>
+    <a class="lang" href="between-two-extremes-en.html">English edition →</a>
+  </div>
   <p class="kicker">Report · 報導 · 2026.10.26 · 同一個問題，四家 AI</p>
   <h1>兩個極端之間<span class="en">Between Two Extremes</span></h1>
   <p class="standfirst">
@@ -522,11 +528,12 @@
       <li>GPT 的原回答內嵌八張圖（OpenAI 圖庫連結，三張在最好那段前、三張在最糟那段前、結尾兩個畫面各一張）。這裡沒有把圖掛進來，因為那些連結會過期，而且圖不是 GPT 的話。每張圖的位置用一行文字標記，附原本的圖片標題（節錄）。</li>
       <li>GPT 那一段第一版（2026-10-26 稍早）是空的：最初貼來的 GPT 段落與 Grok 逐字相同，判斷是貼錯；同日原文補到，已放入。</li>
       <li>導讀是 Claude Code 寫的。四個裡面有一個是 Claude，這點在導讀裡已經說了，讀者自己對照。</li>
+      <li>另有<a href="between-two-extremes-en.html">英文版</a>一頁：四段回答與導讀皆由 Claude Code 翻譯，原文以本頁中文為準。</li>
     </ul>
   </section>
 
   <footer>
-    <p>Report · <a href="https://itrunsitruns.github.io/syntax-field-archive/">The Syntax Field Archive</a> · Human-AI Co-Discovery Project</p>
+    <p>Report · <a href="https://itrunsitruns.github.io/syntax-field-archive/">The Syntax Field Archive</a> · Human-AI Co-Discovery Project · <a href="between-two-extremes-en.html">English edition</a></p>
     <p>來源 · Sources</p>
     <ol class="sources">
       <li>Φiaööna 貼給 Claude Code 的原文，2026-10-26（Grok、Claude、Gemini 三段同一則訊息；GPT 段第一次貼成 Grok 的內容，同日第二則訊息補上原文）</li>
